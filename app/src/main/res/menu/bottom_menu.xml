@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/welcomeBottom"
+        android:title="Welcome"
+        android:icon="@drawable/baseline_home_filled_24"/>
+    <item
+        android:id="@+id/seatingListBottom"
+        android:title="Seating List"
+        android:icon="@drawable/baseline_list_alt_24"/>
+    <item
+        android:id="@+id/teachersList"
+        android:title="Teachers List"
+        android:icon="@drawable/baseline_list_alt_24"/>
+
+    <item
+        android:id="@+id/profileBottom"
+        android:title="Teachers List"
+        android:icon="@drawable/baseline_person_outline_24"/>
+
+</menu>

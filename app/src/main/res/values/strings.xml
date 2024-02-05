@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Riphah Seating Plan</string>
+    <string name="pawa">pawa</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="vision">Riphah International University is a private sector university
+chartered by the federal government of Pakistan in 2002. The
+university was established with a view of producing professionals
+with Islamic moral and ethical values. It is sponsored by a not-for-
+profit trust, namely Islamic International Medical College Trust
+(IIMCT), which was established in 1995. The university started
+functioning in 2002 with its founding Chancellor Maj. Gen(R)
+Muhammad Zulfiqar Ali Khan and Prof. Dr Anis Ahmad PhD as
+its founding Vice-Chancellor</string>
+</resources>
