@@ -148,9 +148,8 @@ public class SignupActivity extends AppCompatActivity {
                 if (task.isSuccessful()){
                     FirebaseUser user = auth.getCurrentUser();
                     String uid = user.getUid();
-                    startActivity(new Intent(SignupActivity.this, StudentsDashboardActivity.class).putExtra("status",currentStatus));
+                    startActivity(new Intent(SignupActivity.this, CreateProfileActivity.class).putExtra("status",currentStatus));
                     addToDatabase(uid,name,email,password);
-
                     binding.progressBar.setVisibility(View.GONE);
                 }
             }
@@ -166,6 +165,7 @@ public class SignupActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()){
                     Toast.makeText(SignupActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+                    binding.progressBar.setVisibility(View.GONE);
                 }
             }
         }).addOnFailureListener(new OnFailureListener() {

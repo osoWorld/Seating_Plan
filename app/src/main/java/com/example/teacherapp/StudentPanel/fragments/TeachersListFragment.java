@@ -27,25 +27,7 @@ public class TeachersListFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentTeachersListBinding.inflate(getLayoutInflater(),container,false);
-
-        ArrayList<TeachersListModelClass> tList = new ArrayList<>();
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Shahroz Hashmi"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Muhammad Usman"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Saad Bari"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Muhammad Suffian"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Cheema Mobiles"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Abdullah Chattha"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Ameeq"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Pawa"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Haseeb"));
-        tList.add(new TeachersListModelClass(R.drawable.user_pro,"Ahmad"));
-
-        TeachersListAdapter teachersListAdapter = new TeachersListAdapter(tList,getContext());
-
-        binding.teachersListRecyclerView.setAdapter(teachersListAdapter);
-        binding.teachersListRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-
+        binding = FragmentTeachersListBinding.inflate(inflater,container,false);
         return binding.getRoot();
     }
 }

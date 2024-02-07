@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.teacherapp.R;
 import com.example.teacherapp.StudentPanel.fragments.SeatingFragment;
@@ -21,6 +23,11 @@ public class StudentsDashboardActivity extends AppCompatActivity  {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_students_dashboard);
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         ChangeFragment(new WelcomeFragment());

@@ -27,15 +27,16 @@ class MySplashScreenActivity : AppCompatActivity() {
         window.statusBarColor = resources.getColor(R.color.white)
 
         binding.getStarted.setOnClickListener {
-            if (currentUser != null){
-                startActivity(Intent(this, StudentsDashboardActivity::class.java))
-                finish()
-            }else
-            {
-                startActivity(Intent(this,
-                    SignupActivity::class.java))
-                finish()
-            }
+//            if (currentUser != null){
+//                startActivity(Intent(this, StudentsDashboardActivity::class.java))
+//                finish()
+//            }else
+//            {
+//                startActivity(Intent(this,
+//                    SignupActivity::class.java))
+//                finish()
+//            }
+            startActivity(Intent(this,SignupActivity::class.java))
         }
     }
 }

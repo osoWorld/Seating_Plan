@@ -4,6 +4,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.teacherapp.R;
 import com.example.teacherapp.StudentPanel.classes.adapterClasses.StudentDetailCheckAdapter;
@@ -23,6 +25,11 @@ public class StudentDetailCheckActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentDetailCheckBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
 //        Instances();
 
