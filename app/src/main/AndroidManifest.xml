@@ -15,21 +15,31 @@
         android:theme="@style/Theme.TeacherApp"
         tools:targetApi="31">
         <activity
+            android:name=".adminPanel.activities.AdminDashboardActivity"
+            android:exported="false" />
+        <activity
+            android:name=".teacherPanel.activities.StudentAttendanceActivity"
+            android:exported="false" />
+        <activity
             android:name=".StudentPanel.activities.CreateProfileActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".StudentPanel.activities.StudentsDashboardActivity"
-            android:exported="true">
+            android:exported="true" />
+        <activity
+            android:name=".teacherPanel.activities.TeacherDetailCheckActivity"
+            android:exported="false" />
+        <activity
+            android:name=".teacherPanel.activities.TeacherDashboardActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
-        <activity
-            android:name=".teacherPanel.TeacherDetailCheckActivity"
-            android:exported="false" />
-        <activity
-            android:name=".teacherPanel.TeacherDashboardActivity"
-            android:exported="false" />
+
+
         <activity
             android:name=".StudentPanel.activities.StudentDetailCheckActivity"
             android:exported="false" />
@@ -48,11 +58,7 @@
         <activity
             android:name=".splashScreen.MySplashScreenActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

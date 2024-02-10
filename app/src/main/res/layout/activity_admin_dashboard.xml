@@ -5,21 +5,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".teacherPanel.activities.TeacherDashboardActivity">
-
-    <FrameLayout
-        android:id="@+id/teacherFrame"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/teacherBottomNavigation"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+    tools:context=".adminPanel.activities.AdminDashboardActivity">
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/teacherBottomNavigation"
         android:layout_width="match_parent"
-        android:layout_height="65dp"
-        app:menu="@menu/teacher_bottom_menu"
+        android:layout_height="67dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

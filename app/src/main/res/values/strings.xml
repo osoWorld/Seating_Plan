@@ -12,4 +12,8 @@ profit trust, namely Islamic International Medical College Trust
 functioning in 2002 with its founding Chancellor Maj. Gen(R)
 Muhammad Zulfiqar Ali Khan and Prof. Dr Anis Ahmad PhD as
 its founding Vice-Chancellor</string>
+    <string name="title_activity_extra">ExtraActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>
