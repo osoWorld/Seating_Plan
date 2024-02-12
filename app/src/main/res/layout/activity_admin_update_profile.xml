@@ -217,8 +217,8 @@
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="@+id/linearLayout5"
-            app:layout_constraintStart_toStartOf="@+id/linearLayout5"
+            app:layout_constraintEnd_toEndOf="@+id/linearLayout4"
+            app:layout_constraintStart_toStartOf="@+id/linearLayout4"
             app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
         <androidx.appcompat.widget.AppCompatButton
