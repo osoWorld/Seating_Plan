@@ -335,7 +335,7 @@
             app:layout_constraintTop_toBottomOf="@+id/linearLayout5" />
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/logoutButton"
+            android:id="@+id/teacherLogoutButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/next_btn_bg"

@@ -2,13 +2,13 @@ package com.example.teacherapp.adminPanel.classes.modelClasses;
 
 public class TeacherStudentListModelClass {
     private int teacherStudentImg;
-    private String teacherStudentName, teacherStudentId, teacherStudentRoom;
+    private String teacherStudentName, teacherStudentId, teacherStudentDepartment;
 
-    public TeacherStudentListModelClass(int teacherStudentImg, String teacherStudentName, String teacherStudentId, String teacherStudentRoom) {
+    public TeacherStudentListModelClass(int teacherStudentImg, String teacherStudentName, String teacherStudentId, String teacherStudentDepartment) {
         this.teacherStudentImg = teacherStudentImg;
         this.teacherStudentName = teacherStudentName;
         this.teacherStudentId = teacherStudentId;
-        this.teacherStudentRoom = teacherStudentRoom;
+        this.teacherStudentDepartment = teacherStudentDepartment;
     }
 
     public int getTeacherStudentImg() {
@@ -35,11 +35,11 @@ public class TeacherStudentListModelClass {
         this.teacherStudentId = teacherStudentId;
     }
 
-    public String getTeacherStudentRoom() {
-        return teacherStudentRoom;
+    public String getTeacherStudentDepartment() {
+        return teacherStudentDepartment;
     }
 
-    public void setTeacherStudentRoom(String teacherStudentRoom) {
-        this.teacherStudentRoom = teacherStudentRoom;
+    public void setTeacherStudentDepartment(String teacherStudentDepartment) {
+        this.teacherStudentDepartment = teacherStudentDepartment;
     }
 }

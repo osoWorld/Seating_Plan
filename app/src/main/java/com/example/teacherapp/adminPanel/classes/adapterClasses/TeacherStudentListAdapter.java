@@ -38,7 +38,7 @@ public class TeacherStudentListAdapter extends RecyclerView.Adapter<TeacherStude
         holder.teacherStudentImg.setImageResource(data.getTeacherStudentImg());
         holder.teacherStudentName.setText(data.getTeacherStudentName());
         holder.teacherStudentId.setText(data.getTeacherStudentId());
-        holder.teacherStudentRoom.setText(data.getTeacherStudentRoom());
+        holder.teacherStudentRoom.setText(data.getTeacherStudentDepartment());
     }
 
     @Override

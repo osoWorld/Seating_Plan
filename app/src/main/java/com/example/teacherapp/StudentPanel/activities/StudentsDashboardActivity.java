@@ -32,12 +32,11 @@ public class StudentsDashboardActivity extends AppCompatActivity  {
         bottomNavigationView = findViewById(R.id.bottomNavigationView);
         ChangeFragment(new WelcomeFragment());
 
-        bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
                 int menuId = item.getItemId();
-                if (menuId == R.id.welcomeBottom){
+                if (menuId == R.id.welcomeBottom) {
                     ChangeFragment(new WelcomeFragment());
                 } else if (menuId == R.id.seatingListBottom) {
                     ChangeFragment(new SeatingFragment());
@@ -45,15 +44,14 @@ public class StudentsDashboardActivity extends AppCompatActivity  {
                     ChangeFragment(new TeachersListFragment());
                 } else if (menuId == R.id.profileBottom) {
                     ChangeFragment(new StudentProfileFragment());
-                }else {
+                } else {
 
                 }
-                return false;
+                return true;
             }
         });
+
     }
-
-
 
     public void ChangeFragment(Fragment fragment){
         getSupportFragmentManager().beginTransaction().replace(R.id.mainFrames,fragment).commit();

@@ -12,13 +12,16 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.activities.AdminDashboardActivity;
 import com.example.teacherapp.databinding.ActivityCreateProfileBinding;
+import com.example.teacherapp.teacherPanel.activities.TeacherDashboardActivity;
 
 import java.util.ArrayList;
 
 public class CreateProfileActivity extends AppCompatActivity {
     private ActivityCreateProfileBinding binding;
     private String currentStatus;
+    private String roleStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +32,9 @@ public class CreateProfileActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
+
+        Intent intent = getIntent();
+        roleStatus = intent.getStringExtra("status");
 
         ArrayList<String> arrayList = new ArrayList<>();
         arrayList.add("Computer Science");
@@ -54,8 +60,16 @@ public class CreateProfileActivity extends AppCompatActivity {
         binding.continueProButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateProfileActivity.this,StudentsDashboardActivity.class);
-                startActivity(intent);
+                if (roleStatus.equals("Admin")){
+                    Intent intent = new Intent(CreateProfileActivity.this, AdminDashboardActivity.class);
+                    startActivity(intent);
+                } else if (roleStatus.equals("Teacher")) {
+                    Intent intent = new Intent(CreateProfileActivity.this, TeacherDashboardActivity.class);
+                    startActivity(intent);
+                }else {
+                    Intent intent = new Intent(CreateProfileActivity.this, StudentsDashboardActivity.class);
+                    startActivity(intent);
+                }
             }
         });
     }

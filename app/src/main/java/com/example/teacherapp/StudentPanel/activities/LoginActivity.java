@@ -44,17 +44,19 @@ public class LoginActivity extends AppCompatActivity {
                  password = binding.password.getText().toString().trim();
 
 
-                if (email.isEmpty() && password.isEmpty()){
-                    binding.email.setError("Fields can't be empty");
-                    binding.password.setError("Fields can't be empty");
-                } else if (email.isEmpty()){
-                    binding.email.setError("Field can't be empty");
-                } else if (password.isEmpty()) {
-                    binding.password.setError("Field can't be empty");
-                } else {
-                    binding.progressBarLogin.setVisibility(View.VISIBLE);
-                    loginWithFirebase(email, password);
-                }
+//                if (email.isEmpty() && password.isEmpty()){
+//                    binding.email.setError("Fields can't be empty");
+//                    binding.password.setError("Fields can't be empty");
+////                } else if (email.isEmpty()){
+////                    binding.email.setError("Field can't be empty");
+////                } else if (password.isEmpty()) {
+////                    binding.password.setError("Field can't be empty");
+//                } else {
+//                    binding.progressBarLogin.setVisibility(View.VISIBLE);
+//
+//                }
+
+                loginWithFirebase(email, password);
             }
         });
 
@@ -74,19 +76,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void loginWithFirebase(String email, String password) {
-        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                binding.progressBarLogin.setVisibility(View.GONE);
-                if (task.isSuccessful()){
-                    Toast.makeText(LoginActivity.this, "Welcome Back", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(LoginActivity.this, StudentDashboardActivity.class));
-                }
-                else {
-                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
+//        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                binding.progressBarLogin.setVisibility(View.GONE);
+//                if (task.isSuccessful()){
+//                    Toast.makeText(LoginActivity.this, "Welcome Back", Toast.LENGTH_SHORT).show();
+//
+//                }
+//                else {
+//                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        });
+
+        startActivity(new Intent(LoginActivity.this, CreateProfileActivity.class));
     }
 
     @Override

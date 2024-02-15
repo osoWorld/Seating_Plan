@@ -1,6 +1,7 @@
 package com.example.teacherapp.adminPanel.classes.adapterClasses;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,9 +10,12 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.StudentPanel.activities.LoginActivity;
+import com.example.teacherapp.StudentPanel.activities.SignupActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.AdminLogoutActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.AdminUpdateProfileActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.AssignRoomsActivity;
@@ -52,9 +56,9 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
                 int id = data.getItemPosition();
 
                 if (id == 1){
-                    context.startActivity(new Intent(context, TeacherListActivity.class));
-                } else if (id == 2) {
                     context.startActivity(new Intent(context, StudentListActivity.class));
+                } else if (id == 2) {
+                    context.startActivity(new Intent(context, TeacherListActivity.class));
                 } else if (id == 3) {
                     context.startActivity(new Intent(context, UploadDateSheetActivity.class));
                 } else if (id == 4) {
@@ -66,7 +70,23 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
                 } else if (id == 7) {
                     context.startActivity(new Intent(context, AdminUpdateProfileActivity.class));
                 } else if (id == 8) {
-                    context.startActivity(new Intent(context, AdminLogoutActivity.class));
+
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setMessage("Do you sure want to logout ?");
+                    builder.setTitle("Logout !");
+                    builder.setCancelable(false);
+
+                    builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                        context.startActivity(new Intent(context, SignupActivity.class));
+                    });
+
+                    builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                        dialog.cancel();
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+
                 }else {
 
                 }

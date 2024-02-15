@@ -50,6 +50,7 @@ public class SignupActivity extends AppCompatActivity {
     FirebaseAuth auth;
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 20;
+    ArrayList<String> arrayList;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,7 +76,7 @@ public class SignupActivity extends AppCompatActivity {
 
         binding.googleButton.setText(spannableString);
 
-        ArrayList<String> arrayList = new ArrayList<>();
+         arrayList = new ArrayList<>();
         arrayList.add("Student");
         arrayList.add("Teacher");
         arrayList.add("Admin");
@@ -104,26 +105,28 @@ public class SignupActivity extends AppCompatActivity {
                  password = binding.password.getText().toString().trim();
                  confirmPassword = binding.confirmPassword.getText().toString().trim();
 
-                if (name.isEmpty() && email.isEmpty() && password.isEmpty() && confirmPassword.isEmpty()) {
-                    binding.fullName.setError("Field can't be empty");
-                    binding.email.setError("Field can't be empty");
-                    binding.password.setError("Field can't be empty");
-                    binding.confirmPassword.setError("Field can't be empty");
-                } else if (name.isEmpty()) {
-                    binding.fullName.setError("Field can't be empty");
-                } else if (email.isEmpty() || !email.contains(".com")) {
-                    binding.email.setError("Invalid email");
-                } else if (password.isEmpty()) {
-                    binding.password.setError("Field can't be empty");
-                } else if (password.length() < 6) {
-                    binding.password.setError("Password strength is weak");
-                } else if (confirmPassword.isEmpty() || !confirmPassword.equals(password)) {
-                    binding.confirmPassword.setError("Invalid password");
-                } else {
-                    signInWIthFirebase(email,password);
+//                if (name.isEmpty() && email.isEmpty() && password.isEmpty() && confirmPassword.isEmpty()) {
+//                    binding.fullName.setError("Field can't be empty");
+//                    binding.email.setError("Field can't be empty");
+//                    binding.password.setError("Field can't be empty");
+//                    binding.confirmPassword.setError("Field can't be empty");
+////                } else if (name.isEmpty()) {
+////                    binding.fullName.setError("Field can't be empty");
+////                } else if (email.isEmpty() || !email.contains(".com")) {
+////                    binding.email.setError("Invalid email");
+////                } else if (password.isEmpty()) {
+////                    binding.password.setError("Field can't be empty");
+////                } else if (password.length() < 6) {
+////                    binding.password.setError("Password strength is weak");
+////                } else if (confirmPassword.isEmpty() || !confirmPassword.equals(password)) {
+////                    binding.confirmPassword.setError("Invalid password");
+//                } else {
+//
+//
+//                    binding.progressBar.setVisibility(View.VISIBLE);
+//                }
 
-                    binding.progressBar.setVisibility(View.VISIBLE);
-                }
+                signInWIthFirebase(email,password);
             }
         });
         binding.loginTV.setOnClickListener(new View.OnClickListener() {
@@ -142,18 +145,21 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void signInWIthFirebase(String email, String password) {
-        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if (task.isSuccessful()){
-                    FirebaseUser user = auth.getCurrentUser();
-                    String uid = user.getUid();
-                    startActivity(new Intent(SignupActivity.this, CreateProfileActivity.class).putExtra("status",currentStatus));
-                    addToDatabase(uid,name,email,password);
-                    binding.progressBar.setVisibility(View.GONE);
-                }
-            }
-        });
+//        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if (task.isSuccessful()){
+//                    FirebaseUser user = auth.getCurrentUser();
+//                    String uid = user.getUid();
+//
+//                    addToDatabase(uid,name,email,password);
+//                    binding.progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        });
+
+        startActivity(new Intent(SignupActivity.this, CreateProfileActivity.class).putExtra("status",currentStatus));
+
     }
 
     private void addToDatabase(String userId, String name, String email, String userPassword) {
