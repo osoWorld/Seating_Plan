@@ -42,7 +42,7 @@
             android:padding="20dp">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/circleImageView3"
+                android:id="@+id/mainProfileCreateImage"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_marginTop="5dp"
@@ -60,7 +60,7 @@
                 android:gravity="center"
                 android:orientation="vertical"
                 android:padding="2dp"
-                app:layout_constraintTop_toBottomOf="@+id/circleImageView3"
+                app:layout_constraintTop_toBottomOf="@+id/mainProfileCreateImage"
                 tools:layout_editor_absoluteX="20dp">
 
                 <EditText
@@ -80,7 +80,7 @@
                     android:textColorHint="@color/default_textColor" />
 
                 <EditText
-                    android:id="@+id/rollNumber"
+                    android:id="@+id/idNumber"
                     android:layout_width="match_parent"
                     android:layout_height="55dp"
                     android:layout_marginTop="20dp"
@@ -88,7 +88,7 @@
                     android:drawableStart="@drawable/user_my"
                     android:drawablePadding="12dp"
                     android:drawableTint="@color/default_textColor"
-                    android:hint="Roll Number"
+                    android:hint="Your Id"
                     android:inputType="number"
                     android:maxLines="1"
                     android:padding="12dp"

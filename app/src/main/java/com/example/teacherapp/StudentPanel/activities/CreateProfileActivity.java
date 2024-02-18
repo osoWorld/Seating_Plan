@@ -1,8 +1,16 @@
 package com.example.teacherapp.StudentPanel.activities;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContract;
+import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
@@ -14,7 +22,18 @@ import android.widget.Toast;
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.activities.AdminDashboardActivity;
 import com.example.teacherapp.databinding.ActivityCreateProfileBinding;
+import com.example.teacherapp.modelClass.Users;
 import com.example.teacherapp.teacherPanel.activities.TeacherDashboardActivity;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
 
@@ -22,6 +41,17 @@ public class CreateProfileActivity extends AppCompatActivity {
     private ActivityCreateProfileBinding binding;
     private String currentStatus;
     private String roleStatus;
+    private Uri imageUri;
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
+    private FirebaseStorage firebaseStorage;
+    private StorageReference storageReference;
+    private String uid;
+    private String profileLink;
+    private ArrayList<String> department;
+    private String userEmail;
+    private String userPassword;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +65,25 @@ public class CreateProfileActivity extends AppCompatActivity {
 
         Intent intent = getIntent();
         roleStatus = intent.getStringExtra("status");
+        userEmail = intent.getStringExtra("stuEmail");
+        userPassword = intent.getStringExtra("userPassword");
 
-        ArrayList<String> arrayList = new ArrayList<>();
-        arrayList.add("Computer Science");
-        arrayList.add("Information Technology");
-        arrayList.add("Artificial Intelligence");
-        arrayList.add("Cyber Security");
 
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, arrayList);
+        auth = FirebaseAuth.getInstance();
+        database = FirebaseDatabase.getInstance();
+        firebaseStorage = FirebaseStorage.getInstance();
+
+        if (auth.getCurrentUser() != null) {
+            uid = auth.getCurrentUser().getUid();
+        }
+
+        department = new ArrayList<>();
+        department.add("Computer Science");
+        department.add("Information Technology");
+        department.add("Artificial Intelligence");
+        department.add("Cyber Security");
+
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, androidx.appcompat.R.layout.support_simple_spinner_dropdown_item, department);
         binding.spinnerDepartment.setAdapter(arrayAdapter);
 
         binding.spinnerDepartment.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -60,16 +101,91 @@ public class CreateProfileActivity extends AppCompatActivity {
         binding.continueProButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (roleStatus.equals("Admin")){
-                    Intent intent = new Intent(CreateProfileActivity.this, AdminDashboardActivity.class);
-                    startActivity(intent);
-                } else if (roleStatus.equals("Teacher")) {
-                    Intent intent = new Intent(CreateProfileActivity.this, TeacherDashboardActivity.class);
-                    startActivity(intent);
-                }else {
-                    Intent intent = new Intent(CreateProfileActivity.this, StudentsDashboardActivity.class);
-                    startActivity(intent);
+
+                String yourName = binding.yourName.getText().toString().trim();
+                String yourId = binding.idNumber.getText().toString().trim();
+
+                if (yourName.isEmpty() || yourId.isEmpty()) {
+                    Toast.makeText(CreateProfileActivity.this, "Field's cannot be empty", Toast.LENGTH_SHORT).show();
+                } else {
+                    uploadImage(yourId, yourName, userEmail, userPassword, uid);
                 }
+            }
+        });
+
+        binding.mainProfileCreateImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK);
+                galleryIntent.setType("image/*");
+                imagePickerActivityResult.launch(galleryIntent);
+
+            }
+        });
+
+    }
+
+    ActivityResultLauncher<Intent> imagePickerActivityResult = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result != null) {
+                        imageUri = result.getData().getData();
+                        binding.mainProfileCreateImage.setImageURI(imageUri);
+                    }
+                }
+            }
+    );
+
+    private void movingAccordingToRole(String roleStatus) {
+        if (roleStatus.equals("Admin")) {
+            Intent intent = new Intent(CreateProfileActivity.this, AdminDashboardActivity.class);
+            startActivity(intent);
+        } else if (roleStatus.equals("Teacher")) {
+            Intent intent = new Intent(CreateProfileActivity.this, TeacherDashboardActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(CreateProfileActivity.this, StudentsDashboardActivity.class);
+            startActivity(intent);
+        }
+    }
+
+    private void uploadImage(String userId, String name, String email, String userPassword, String uid) {
+        if (imageUri != null) {
+            storageReference = firebaseStorage.getReference();
+            StorageReference imageRef = storageReference.child("Profile Images").child(roleStatus).child(uid);
+
+            imageRef.putFile(imageUri).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    // Image upload successful, now retrieve download URL
+                    imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
+                        profileLink = uri.toString();
+                        addToDatabase(userId, name, email, userPassword, profileLink, uid);
+                    }).addOnFailureListener(e -> {
+                        Toast.makeText(CreateProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                    });
+                } else {
+                    Toast.makeText(CreateProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void addToDatabase(String userId, String name, String email, String userPassword, String imageLink, String uid) {
+        DatabaseReference myRef = database.getReference("Seating Plan").child("Profile Details").child(roleStatus);
+        Users obj = new Users(userId, name, userPassword, email, currentStatus, department.toString(), imageLink, uid);
+        myRef.child(uid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if (task.isSuccessful()) {
+                    Toast.makeText(CreateProfileActivity.this, "Welcome " + currentStatus, Toast.LENGTH_SHORT).show();
+                    movingAccordingToRole(roleStatus);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(CreateProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
     }

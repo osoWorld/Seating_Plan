@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.activities.StudentAssignSeatsActivity;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
@@ -37,18 +38,21 @@ public class AssignSeatsAdapter extends RecyclerView.Adapter<AssignSeatsAdapter.
     public void onBindViewHolder(@NonNull AssignSeatsViewHolder holder, int position) {
         final TeacherStudentListModelClass data = mList.get(position);
 
-        holder.teacherStudentImg.setImageResource(data.getTeacherStudentImg());
-        holder.teacherStudentName.setText(data.getTeacherStudentName());
-        holder.teacherStudentId.setText(data.getTeacherStudentId());
-        holder.teacherStudentRoom.setText(data.getTeacherStudentDepartment());
+        Glide.with(context).load(data.getImageUrl())
+                .placeholder(R.drawable.user_pro)
+                .into(holder.teacherStudentImg);
+
+        holder.teacherStudentName.setText(data.getUserName());
+        holder.teacherStudentId.setText(data.getUserId());
+        holder.teacherStudentRoom.setText(data.getStudentDepartment());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 context.startActivity(new Intent(context, StudentAssignSeatsActivity.class)
-                        .putExtra("studentName", data.getTeacherStudentName())
-                        .putExtra("studentId", data.getTeacherStudentId())
-                        .putExtra("studentDepartment",data.getTeacherStudentDepartment()));
+                        .putExtra("studentName", data.getUserName())
+                        .putExtra("studentId", data.getUserId())
+                        .putExtra("studentDepartment",data.getStudentDepartment()));
 
             }
         });

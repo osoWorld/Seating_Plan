@@ -1,14 +1,17 @@
 package com.example.teacherapp.modelClass;
 
 public class Users {
-    String userId, userName, userPassword, userEmail, currentStatus;
+    String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid;
 
-    public Users(String userId, String userName, String userPassword, String userEmail, String currentStatus) {
+    public Users(String userId, String userName, String userPassword, String userEmail, String currentStatus, String studentDepartment, String imageUrl, String uid) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
         this.userEmail = userEmail;
         this.currentStatus = currentStatus;
+        this.studentDepartment = studentDepartment;
+        this.imageUrl = imageUrl;
+        this.uid = uid;
     }
 
     public Users() {
@@ -52,5 +55,29 @@ public class Users {
 
     public void setCurrentStatus(String currentStatus) {
         this.currentStatus = currentStatus;
+    }
+
+    public String getStudentDepartment() {
+        return studentDepartment;
+    }
+
+    public void setStudentDepartment(String studentDepartment) {
+        this.studentDepartment = studentDepartment;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

@@ -105,26 +105,26 @@ public class SignupActivity extends AppCompatActivity {
                  password = binding.password.getText().toString().trim();
                  confirmPassword = binding.confirmPassword.getText().toString().trim();
 
-//                if (name.isEmpty() && email.isEmpty() && password.isEmpty() && confirmPassword.isEmpty()) {
-//                    binding.fullName.setError("Field can't be empty");
-//                    binding.email.setError("Field can't be empty");
-//                    binding.password.setError("Field can't be empty");
-//                    binding.confirmPassword.setError("Field can't be empty");
-////                } else if (name.isEmpty()) {
-////                    binding.fullName.setError("Field can't be empty");
-////                } else if (email.isEmpty() || !email.contains(".com")) {
-////                    binding.email.setError("Invalid email");
-////                } else if (password.isEmpty()) {
-////                    binding.password.setError("Field can't be empty");
-////                } else if (password.length() < 6) {
-////                    binding.password.setError("Password strength is weak");
-////                } else if (confirmPassword.isEmpty() || !confirmPassword.equals(password)) {
-////                    binding.confirmPassword.setError("Invalid password");
-//                } else {
-//
-//
-//                    binding.progressBar.setVisibility(View.VISIBLE);
-//                }
+                if (name.isEmpty() && email.isEmpty() && password.isEmpty() && confirmPassword.isEmpty()) {
+                    binding.fullName.setError("Field can't be empty");
+                    binding.email.setError("Field can't be empty");
+                    binding.password.setError("Field can't be empty");
+                    binding.confirmPassword.setError("Field can't be empty");
+                } else if (name.isEmpty()) {
+                    binding.fullName.setError("Field can't be empty");
+                } else if (email.isEmpty() || !email.contains(".com")) {
+                    binding.email.setError("Invalid email");
+                } else if (password.isEmpty()) {
+                    binding.password.setError("Field can't be empty");
+                } else if (password.length() < 6) {
+                    binding.password.setError("Password strength is weak");
+                } else if (confirmPassword.isEmpty() || !confirmPassword.equals(password)) {
+                    binding.confirmPassword.setError("Invalid password");
+                } else {
+
+
+                    binding.progressBar.setVisibility(View.VISIBLE);
+                }
 
                 signInWIthFirebase(email,password);
             }
@@ -145,42 +145,44 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void signInWIthFirebase(String email, String password) {
-//        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if (task.isSuccessful()){
-//                    FirebaseUser user = auth.getCurrentUser();
-//                    String uid = user.getUid();
+        auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if (task.isSuccessful()){
 //
 //                    addToDatabase(uid,name,email,password);
-//                    binding.progressBar.setVisibility(View.GONE);
-//                }
-//            }
-//        });
 
-        startActivity(new Intent(SignupActivity.this, CreateProfileActivity.class).putExtra("status",currentStatus));
+                    startActivity(new Intent(SignupActivity.this, CreateProfileActivity.class)
+                            .putExtra("status",currentStatus)
+                            .putExtra("stuEmail",email)
+                            .putExtra("userPassword",password));
 
-    }
-
-    private void addToDatabase(String userId, String name, String email, String userPassword) {
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference myRef = database.getReference("Seating Plan").child("Account Details");
-        Users obj=new Users(userId,name, userPassword,email,currentStatus);
-        myRef.child(userId).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if (task.isSuccessful()){
-                    Toast.makeText(SignupActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
                     binding.progressBar.setVisibility(View.GONE);
                 }
             }
-        }).addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(SignupActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
-            }
         });
+
     }
+
+//    private void addToDatabase(String userId, String name, String email, String userPassword) {
+//        FirebaseDatabase database = FirebaseDatabase.getInstance();
+//        DatabaseReference myRef = database.getReference("Seating Plan").child("Account Details");
+//        Users obj=new Users(userId,name, userPassword,email,currentStatus);
+//        myRef.child(userId).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
+//            @Override
+//            public void onComplete(@NonNull Task<Void> task) {
+//                if (task.isSuccessful()){
+//                    Toast.makeText(SignupActivity.this, "Welcome", Toast.LENGTH_SHORT).show();
+//                    binding.progressBar.setVisibility(View.GONE);
+//                }
+//            }
+//        }).addOnFailureListener(new OnFailureListener() {
+//            @Override
+//            public void onFailure(@NonNull Exception e) {
+//                Toast.makeText(SignupActivity.this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
 
     private void signInWithGoogle() {
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)

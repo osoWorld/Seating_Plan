@@ -1,45 +1,83 @@
 package com.example.teacherapp.adminPanel.classes.modelClasses;
 
 public class TeacherStudentListModelClass {
-    private int teacherStudentImg;
-    private String teacherStudentName, teacherStudentId, teacherStudentDepartment;
+    String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid;
 
-    public TeacherStudentListModelClass(int teacherStudentImg, String teacherStudentName, String teacherStudentId, String teacherStudentDepartment) {
-        this.teacherStudentImg = teacherStudentImg;
-        this.teacherStudentName = teacherStudentName;
-        this.teacherStudentId = teacherStudentId;
-        this.teacherStudentDepartment = teacherStudentDepartment;
+    public TeacherStudentListModelClass(String userId, String userName, String userPassword, String userEmail, String currentStatus, String studentDepartment, String imageUrl, String uid) {
+        this.userId = userId;
+        this.userName = userName;
+        this.userPassword = userPassword;
+        this.userEmail = userEmail;
+        this.currentStatus = currentStatus;
+        this.studentDepartment = studentDepartment;
+        this.imageUrl = imageUrl;
+        this.uid = uid;
     }
 
-    public int getTeacherStudentImg() {
-        return teacherStudentImg;
+    public TeacherStudentListModelClass() {
     }
 
-    public void setTeacherStudentImg(int teacherStudentImg) {
-        this.teacherStudentImg = teacherStudentImg;
+    public String getUserId() {
+        return userId;
     }
 
-    public String getTeacherStudentName() {
-        return teacherStudentName;
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
-    public void setTeacherStudentName(String teacherStudentName) {
-        this.teacherStudentName = teacherStudentName;
+    public String getUserName() {
+        return userName;
     }
 
-    public String getTeacherStudentId() {
-        return teacherStudentId;
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 
-    public void setTeacherStudentId(String teacherStudentId) {
-        this.teacherStudentId = teacherStudentId;
+    public String getUserPassword() {
+        return userPassword;
     }
 
-    public String getTeacherStudentDepartment() {
-        return teacherStudentDepartment;
+    public void setUserPassword(String userPassword) {
+        this.userPassword = userPassword;
     }
 
-    public void setTeacherStudentDepartment(String teacherStudentDepartment) {
-        this.teacherStudentDepartment = teacherStudentDepartment;
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
+    }
+
+    public String getCurrentStatus() {
+        return currentStatus;
+    }
+
+    public void setCurrentStatus(String currentStatus) {
+        this.currentStatus = currentStatus;
+    }
+
+    public String getStudentDepartment() {
+        return studentDepartment;
+    }
+
+    public void setStudentDepartment(String studentDepartment) {
+        this.studentDepartment = studentDepartment;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 }

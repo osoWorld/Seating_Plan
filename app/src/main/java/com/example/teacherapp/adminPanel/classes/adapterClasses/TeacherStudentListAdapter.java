@@ -10,12 +10,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 
 import java.util.ArrayList;
 
-public class TeacherStudentListAdapter extends RecyclerView.Adapter<TeacherStudentListAdapter.TeacherStudentListViewHolder>{
+public class TeacherStudentListAdapter extends RecyclerView.Adapter<TeacherStudentListAdapter.TeacherStudentListViewHolder> {
     private ArrayList<TeacherStudentListModelClass> mList;
     private Context context;
 
@@ -27,7 +28,7 @@ public class TeacherStudentListAdapter extends RecyclerView.Adapter<TeacherStude
     @NonNull
     @Override
     public TeacherStudentListViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacher_student_list,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.teacher_student_list, parent, false);
         return new TeacherStudentListViewHolder(view);
     }
 
@@ -35,10 +36,14 @@ public class TeacherStudentListAdapter extends RecyclerView.Adapter<TeacherStude
     public void onBindViewHolder(@NonNull TeacherStudentListViewHolder holder, int position) {
         final TeacherStudentListModelClass data = mList.get(position);
 
-        holder.teacherStudentImg.setImageResource(data.getTeacherStudentImg());
-        holder.teacherStudentName.setText(data.getTeacherStudentName());
-        holder.teacherStudentId.setText(data.getTeacherStudentId());
-        holder.teacherStudentRoom.setText(data.getTeacherStudentDepartment());
+        Glide.with(context).load(data.getImageUrl())
+                .placeholder(R.drawable.user_pro)
+                .into(holder.teacherStudentImg);
+
+        holder.teacherStudentName.setText(data.getUserName());
+        holder.teacherStudentId.setText(data.getUserId());
+        holder.teacherStudentRoom.setText(data.getStudentDepartment());
+
     }
 
     @Override
@@ -46,9 +51,10 @@ public class TeacherStudentListAdapter extends RecyclerView.Adapter<TeacherStude
         return mList.size();
     }
 
-    class TeacherStudentListViewHolder extends RecyclerView.ViewHolder{
+    class TeacherStudentListViewHolder extends RecyclerView.ViewHolder {
         ImageView teacherStudentImg;
         TextView teacherStudentName, teacherStudentId, teacherStudentRoom;
+
         public TeacherStudentListViewHolder(@NonNull View itemView) {
             super(itemView);
 

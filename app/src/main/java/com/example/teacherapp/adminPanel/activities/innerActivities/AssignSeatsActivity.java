@@ -1,20 +1,31 @@
 package com.example.teacherapp.adminPanel.activities.innerActivities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignSeatsAdapter;
+import com.example.teacherapp.adminPanel.classes.adapterClasses.TeacherStudentListAdapter;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.databinding.ActivityAssignSeatsBinding;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class AssignSeatsActivity extends AppCompatActivity {
     private ActivityAssignSeatsBinding binding;
     private ArrayList<TeacherStudentListModelClass> list;
+    private AssignSeatsAdapter adapter;
+    private DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,18 +34,33 @@ public class AssignSeatsActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
 
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Suffian","123456","Computer Science"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Hussain","123456","Computer Science"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Ameeq","123456","Information Technology"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Zohaib","123456","Information Technology"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Abdul","123456","Cyber Security"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Abdullah","123456","Cyber Security"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Mahad","123456","Artificial Intelligence"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Raibal Butt","123456","Artificial Intelligence"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Ehsan","123456","Computer Science"));
-        list.add(new TeacherStudentListModelClass(R.drawable.user_pro,"Ahmad","123456","Artificial Intelligence"));
+        adapter = new AssignSeatsAdapter(list,this);
+        binding.progressB.setVisibility(View.VISIBLE);
 
-        AssignSeatsAdapter adapter = new AssignSeatsAdapter(list,this);
+        reference = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child("Student");
+
+        reference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                    TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
+                    if (model != null) {
+                        list.add(model);
+                        binding.progressB.setVisibility(View.GONE);
+                    }
+                    Log.d("UserNam",model.getUserName()+" UserId: "+model.getUid());
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
         binding.assignSeatsRecView.setAdapter(adapter);
         binding.assignSeatsRecView.setLayoutManager(new LinearLayoutManager(this));

@@ -16,7 +16,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/circleImageView"
+            android:id="@+id/teacherProfileImage"
             android:layout_width="130dp"
             android:layout_height="130dp"
             android:src="@drawable/user_pro"
@@ -51,7 +51,7 @@
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/circleImageView">
+            app:layout_constraintTop_toBottomOf="@+id/teacherProfileImage">
 
             <TextView
                 android:id="@+id/textView22"
@@ -67,6 +67,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/teacherNameEd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -124,6 +125,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/teacherIdEd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -180,6 +182,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/teacherEmailEd"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -227,7 +230,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/poppins_thin"
-                android:text="Phone"
+                android:text="Password"
                 android:textColor="@color/black"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -236,6 +239,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/teacherPassED"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -292,6 +296,7 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
+                android:id="@+id/teacherDepartmentED"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_marginStart="20dp"
@@ -319,7 +324,7 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
         <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/continueButton"
+            android:id="@+id/saveInfoButton"
             android:layout_width="match_parent"
             android:layout_height="60dp"
             android:background="@drawable/next_btn_bg"
@@ -347,9 +352,20 @@
             android:textStyle="bold"
             android:layout_marginTop="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/continueButton"
-            app:layout_constraintStart_toStartOf="@+id/continueButton"
-            app:layout_constraintTop_toBottomOf="@+id/continueButton" />
+            app:layout_constraintEnd_toEndOf="@+id/saveInfoButton"
+            app:layout_constraintStart_toStartOf="@+id/saveInfoButton"
+            app:layout_constraintTop_toBottomOf="@+id/saveInfoButton" />
+
+        <ProgressBar
+            android:id="@+id/progressUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateTint="@color/fav_blue"
+            android:visibility="gone"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
