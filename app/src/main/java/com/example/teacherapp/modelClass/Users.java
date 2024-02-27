@@ -1,9 +1,10 @@
 package com.example.teacherapp.modelClass;
 
 public class Users {
-    String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid;
+    String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid, studentAttendanceStatus,seatingStatus;
+    Boolean isSelected;
 
-    public Users(String userId, String userName, String userPassword, String userEmail, String currentStatus, String studentDepartment, String imageUrl, String uid) {
+    public Users(String userId, String userName, String userPassword, String userEmail, String currentStatus, String studentDepartment, String imageUrl, String uid, String studentAttendanceStatus, String seatingStatus, Boolean isSelected) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -12,6 +13,9 @@ public class Users {
         this.studentDepartment = studentDepartment;
         this.imageUrl = imageUrl;
         this.uid = uid;
+        this.studentAttendanceStatus = studentAttendanceStatus;
+        this.seatingStatus = seatingStatus;
+        this.isSelected = isSelected;
     }
 
     public Users() {
@@ -80,4 +84,29 @@ public class Users {
     public void setUid(String uid) {
         this.uid = uid;
     }
+
+    public String getStudentAttendanceStatus() {
+        return studentAttendanceStatus;
+    }
+
+    public void setStudentAttendanceStatus(String studentAttendanceStatus) {
+        this.studentAttendanceStatus = studentAttendanceStatus;
+    }
+
+    public String getSeatingStatus() {
+        return seatingStatus;
+    }
+
+    public void setSeatingStatus(String seatingStatus) {
+        this.seatingStatus = seatingStatus;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
 }

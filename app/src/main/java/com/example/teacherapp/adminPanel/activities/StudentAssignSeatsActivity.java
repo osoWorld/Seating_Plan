@@ -2,17 +2,24 @@ package com.example.teacherapp.adminPanel.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.adminFragment.AssignRoomsFragment;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignRoomStudentAdapter;
+import com.example.teacherapp.adminPanel.classes.modelClasses.AssignRoomModelClass;
 import com.example.teacherapp.databinding.ActivityStudentAssignSeatsBinding;
+
+import java.util.ArrayList;
 
 public class StudentAssignSeatsActivity extends AppCompatActivity {
     private ActivityStudentAssignSeatsBinding binding;
+    private ArrayList<AssignRoomModelClass> list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,36 +27,22 @@ public class StudentAssignSeatsActivity extends AppCompatActivity {
         binding = ActivityStudentAssignSeatsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-        Intent intent = getIntent();
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
-        String department = intent.getStringExtra("studentDepartment");
-        String studentName = intent.getStringExtra("studentName");
-        String studentId = intent.getStringExtra("studentId");
+        list = new ArrayList<>();
 
-        if (studentName != null && studentId != null){
-            binding.studentName.setText(studentName);
-            binding.studentRollNumber.setText(studentId);
-        }
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
 
-        if (department != null) {
+        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this);
 
-            if (department.equals("Computer Science")) {
-                binding.departmentImage.setImageResource(R.drawable.cs);
-            } else if (department.equals("Information Technology")) {
-                binding.departmentImage.setImageResource(R.drawable.information_technology);
-            } else if (department.equals("Cyber Security")) {
-                binding.departmentImage.setImageResource(R.drawable.cyber_security);
-            } else if (department.equals("Artificial Intelligence")) {
-                binding.departmentImage.setImageResource(R.drawable.artificial_intelligence);
-            } else {
-                binding.departmentImage.setImageResource(R.drawable.cs);
-            }
-        }
+        binding.assignSeatRecView.setAdapter(adapter);
+        binding.assignSeatRecView.setLayoutManager(new GridLayoutManager(this,2));
 
-        ChangeFragment(new AssignRoomsFragment());
-    }
-
-    public void ChangeFragment(Fragment fragment) {
-        getSupportFragmentManager().beginTransaction().replace(R.id.frameAssignsContainers, fragment).commit();
     }
 }

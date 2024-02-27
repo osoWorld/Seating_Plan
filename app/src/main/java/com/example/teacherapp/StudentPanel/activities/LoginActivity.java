@@ -11,18 +11,31 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.activities.AdminDashboardActivity;
 import com.example.teacherapp.databinding.ActivityLoginBinding;
+import com.example.teacherapp.modelClass.Users;
+import com.example.teacherapp.sharedPrefrences.PrefManager;
+import com.example.teacherapp.teacherPanel.activities.TeacherDashboardActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class LoginActivity extends AppCompatActivity {
-    ActivityLoginBinding binding;
-    FirebaseAuth auth;
-    FirebaseDatabase database;
+    private ActivityLoginBinding binding;
+    private FirebaseAuth auth;
+    private FirebaseDatabase database;
+
     private String email, password;
+    private PrefManager prefManager;
+    private DatabaseReference reference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +49,10 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
+        reference = database.getReference();
+
+
+        prefManager = new PrefManager(this);
 
         binding.nextButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -56,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
 //
 //                }
 
-                loginWithFirebase(email, password);
+                SignIn(email, password);
             }
         });
 
@@ -75,22 +92,76 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    private void loginWithFirebase(String email, String password) {
-//        auth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                binding.progressBarLogin.setVisibility(View.GONE);
-//                if (task.isSuccessful()){
-//                    Toast.makeText(LoginActivity.this, "Welcome Back", Toast.LENGTH_SHORT).show();
+    private void SignIn(String email,String pass){
+        binding.progressBarLogin.setVisibility(View.VISIBLE);
+        auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+//                String current_user_id = Objects.requireNonNull(mAuth.getCurrentUser()).getUid();
+                FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+                String userId=currentUser.getUid();
+                if (task.isSuccessful()){
+//                    System.out.println("userss__________________________"+currentUser);
+                    reference.child(userId).addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Users currentStatusDetails= snapshot.getValue(Users.class);
+//                            System.out.println("user status______________________"+currentStatusDetails.getCurrentStatus());
+                            if (currentStatusDetails.getCurrentStatus().equals("Admin")){
+                                prefManager.setCurrentstatus("Admin");
+                                prefManager.setUserID(userId);
+                                Intent intent=new Intent(getApplicationContext(), AdminDashboardActivity.class);
+                                startActivity(intent);
+                                binding.progressBarLogin.setVisibility(View.GONE);
+                                //next proccess
+                            }else if (currentStatusDetails.getCurrentStatus().equals("Teacher")) {
+                                prefManager.setCurrentstatus("Teacher");
+                                prefManager.setUserID(userId);
+                                Intent intent = new Intent(getApplicationContext(), TeacherDashboardActivity.class);
+                                startActivity(intent);
+                                binding.progressBarLogin.setVisibility(View.GONE);
+                                // next 2nd step
+                            } else if (currentStatusDetails.getCurrentStatus().equals("Student")) {
+                                prefManager.setCurrentstatus("Student");
+                                prefManager.setUserID(userId);
+                                Intent intent = new Intent(getApplicationContext(), StudentsDashboardActivity.class);
+                                startActivity(intent);
+                                binding.progressBarLogin.setVisibility(View.GONE);
+                            }
+//                            }else if (currentStatusDetails.getCurentstatus().equals("Admin")){
+//                                prefManager.setCurrentstatus("Admin");
+//                                prefManager.setUserID(currentUser.toString());
+//                                Intent intent=new Intent(getApplicationContext(),AdminDashboard.class);
+//                                startActivity(intent);
 //
-//                }
-//                else {
-//                    Toast.makeText(LoginActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
+//                                // 3rd step
+//                            }
 
-        startActivity(new Intent(LoginActivity.this, CreateProfileActivity.class));
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+                            System.out.println("error________________________"+error.getMessage());
+                            binding.progressBarLogin.setVisibility(View.GONE);
+                        }
+                    });
+
+                }
+                else{
+
+                    binding.progressBarLogin.setVisibility(View.GONE);
+                }
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(LoginActivity.this, "Error"+e.getMessage(), Toast.LENGTH_SHORT).show();
+                binding.progressBarLogin.setVisibility(View.GONE);
+            }
+        });
+
+
     }
 
     @Override

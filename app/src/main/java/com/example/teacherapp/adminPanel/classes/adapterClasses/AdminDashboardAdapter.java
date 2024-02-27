@@ -25,6 +25,8 @@ import com.example.teacherapp.adminPanel.activities.innerActivities.TeacherListA
 import com.example.teacherapp.adminPanel.activities.innerActivities.UploadDateSheetActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.UploadDutySheetActivity;
 import com.example.teacherapp.adminPanel.classes.modelClasses.AdminDashboardItemsModelClass;
+import com.example.teacherapp.sharedPrefrences.PrefManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -77,7 +79,11 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
                     builder.setCancelable(false);
 
                     builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-                        context.startActivity(new Intent(context, SignupActivity.class));
+                        PrefManager prefManager = new PrefManager(context);
+                        prefManager.setCurrentstatus("");
+                        FirebaseAuth auth = FirebaseAuth.getInstance();
+                        auth.signOut();
+                        context.startActivity(new Intent(context, LoginActivity.class));
                     });
 
                     builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {

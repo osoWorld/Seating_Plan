@@ -4,11 +4,15 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.activities.AdminDashboardActivity;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.TeacherStudentListAdapter;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.databinding.ActivityStudentListBinding;
@@ -30,6 +34,11 @@ public class StudentListActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityStudentListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
         list = new ArrayList<>();
 
@@ -63,5 +72,10 @@ public class StudentListActivity extends AppCompatActivity {
 
         binding.studentListAdminRecyclerView.setAdapter(adapter);
         binding.studentListAdminRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(StudentListActivity.this, AdminDashboardActivity.class));
     }
 }

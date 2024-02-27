@@ -1,6 +1,7 @@
 
 package com.example.teacherapp.StudentPanel.fragments;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,8 +11,10 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,6 +27,7 @@ import com.example.teacherapp.StudentPanel.activities.SignupActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.AdminUpdateProfileActivity;
 import com.example.teacherapp.databinding.FragmentStudentProfileBinding;
 import com.example.teacherapp.modelClass.Users;
+import com.example.teacherapp.sharedPrefrences.PrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -84,13 +88,23 @@ public class StudentProfileFragment extends Fragment {
             }
         });
 
+        binding.studentLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefManager prefManager = new PrefManager(getContext());
+                prefManager.setCurrentstatus("");
+                auth.signOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
+
 
         return binding.getRoot();
     }
 
     private void getUserData() {
         if (uid != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child("Student").child(uid);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child(uid);
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -131,7 +145,7 @@ public class StudentProfileFragment extends Fragment {
 
     private void updateProfile(String name, String email, String password, String imageUri) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("Seating Plan").child("Profile Details").child("Student").child(uid);
+        DatabaseReference usersRef = database.getReference("Seating Plan").child("Profile Details").child(uid);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("userName", name);
@@ -174,7 +188,7 @@ public class StudentProfileFragment extends Fragment {
             binding.progressUpdate.setVisibility(View.VISIBLE);
             firebaseStorage = FirebaseStorage.getInstance();
             storageReference = firebaseStorage.getReference();
-            StorageReference imageRef = storageReference.child("Profile Images").child("Student").child(uid);
+            StorageReference imageRef = storageReference.child("Profile Images").child(uid);
 
             imageRef.putFile(imageUri).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {

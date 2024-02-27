@@ -11,11 +11,14 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.example.teacherapp.R;
 import com.example.teacherapp.StudentPanel.activities.CreateProfileActivity;
+import com.example.teacherapp.adminPanel.activities.AdminDashboardActivity;
 import com.example.teacherapp.databinding.ActivityAdminUpdateProfileBinding;
 import com.example.teacherapp.modelClass.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -48,6 +51,11 @@ public class AdminUpdateProfileActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAdminUpdateProfileBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        Window window = this.getWindow();
+        window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+        window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
         auth = FirebaseAuth.getInstance();
         uid = auth.getCurrentUser().getUid();
@@ -182,5 +190,10 @@ public class AdminUpdateProfileActivity extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        startActivity(new Intent(AdminUpdateProfileActivity.this, AdminDashboardActivity.class));
     }
 }

@@ -17,9 +17,11 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.example.teacherapp.R;
+import com.example.teacherapp.StudentPanel.activities.LoginActivity;
 import com.example.teacherapp.StudentPanel.activities.SignupActivity;
 import com.example.teacherapp.databinding.FragmentTeacherUpdateProfileBinding;
 import com.example.teacherapp.modelClass.Users;
+import com.example.teacherapp.sharedPrefrences.PrefManager;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -78,13 +80,22 @@ public class TeacherUpdateProfileFragment extends Fragment {
             }
         });
 
+        binding.teacherLogoutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PrefManager prefManager = new PrefManager(getContext());
+                prefManager.setCurrentstatus("");
+                auth.signOut();
+                startActivity(new Intent(getContext(), LoginActivity.class));
+            }
+        });
 
         return binding.getRoot();
     }
 
     private void getUserData() {
         if (uid != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child("Student").child(uid);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child(uid);
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -125,7 +136,7 @@ public class TeacherUpdateProfileFragment extends Fragment {
 
     private void updateProfile(String name, String email, String password, String imageUri) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("Seating Plan").child("Profile Details").child("Student").child(uid);
+        DatabaseReference usersRef = database.getReference("Seating Plan").child("Profile Details").child(uid);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("userName", name);
@@ -168,7 +179,7 @@ public class TeacherUpdateProfileFragment extends Fragment {
             binding.progressUpdate.setVisibility(View.VISIBLE);
             firebaseStorage = FirebaseStorage.getInstance();
             storageReference = firebaseStorage.getReference();
-            StorageReference imageRef = storageReference.child("Profile Images").child("Student").child(uid);
+            StorageReference imageRef = storageReference.child("Profile Images").child(uid);
 
             imageRef.putFile(imageUri).addOnCompleteListener(task -> {
                 if (task.isSuccessful()) {

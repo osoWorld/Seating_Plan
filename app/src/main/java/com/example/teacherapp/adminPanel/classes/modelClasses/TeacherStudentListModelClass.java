@@ -1,9 +1,16 @@
 package com.example.teacherapp.adminPanel.classes.modelClasses;
 
-public class TeacherStudentListModelClass {
-    String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid;
+import com.example.teacherapp.teacherPanel.classes.modelClasses.SelectedItemModel;
 
-    public TeacherStudentListModelClass(String userId, String userName, String userPassword, String userEmail, String currentStatus, String studentDepartment, String imageUrl, String uid) {
+public class TeacherStudentListModelClass {
+    String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid,seatingStatus ;
+    Boolean isSelected;
+
+
+    public TeacherStudentListModelClass() {
+    }
+
+    public TeacherStudentListModelClass(String userId, String userName, String userPassword, String userEmail, String currentStatus, String studentDepartment, String imageUrl, String uid, String seatingStatus, Boolean isSelected) {
         this.userId = userId;
         this.userName = userName;
         this.userPassword = userPassword;
@@ -12,9 +19,8 @@ public class TeacherStudentListModelClass {
         this.studentDepartment = studentDepartment;
         this.imageUrl = imageUrl;
         this.uid = uid;
-    }
-
-    public TeacherStudentListModelClass() {
+        this.seatingStatus = seatingStatus;
+        this.isSelected = isSelected;
     }
 
     public String getUserId() {
@@ -73,11 +79,29 @@ public class TeacherStudentListModelClass {
         this.imageUrl = imageUrl;
     }
 
-    public String getUid() {
-        return uid;
-    }
+
 
     public void setUid(String uid) {
         this.uid = uid;
+    }
+
+    public String getSeatingStatus() {
+        return seatingStatus;
+    }
+
+    public void setSeatingStatus(String seatingStatus) {
+        this.seatingStatus = seatingStatus;
+    }
+
+    public Boolean getIsSelected() {
+        return isSelected;
+    }
+
+    public void setIsSelected(Boolean isSelected) {
+        this.isSelected = isSelected;
+    }
+
+    public String getUid() {
+        return uid;
     }
 }

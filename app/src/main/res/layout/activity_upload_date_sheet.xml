@@ -9,6 +9,7 @@
     tools:context=".adminPanel.activities.innerActivities.UploadDateSheetActivity">
 
     <TextView
+        android:id="@+id/galleryButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/poppins_thin"
@@ -54,7 +55,13 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@color/white">
+
                 <ImageView
+                    android:id="@+id/dateSheetImage"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:scaleType="fitXY"
@@ -63,10 +70,23 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
+                    <ProgressBar
+                        android:id="@+id/progressBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:indeterminateTint="@color/fav_blue"
+                        android:visibility="gone"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
             </androidx.cardview.widget.CardView>
 
             <EditText
-                android:id="@+id/editText"
+                android:id="@+id/examTypeED"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_marginStart="15dp"
@@ -82,6 +102,7 @@
                 app:layout_constraintTop_toBottomOf="@+id/cardView5" />
 
             <EditText
+                android:id="@+id/departmentED"
                 android:layout_width="match_parent"
                 android:layout_height="57dp"
                 android:layout_marginStart="15dp"
@@ -92,9 +113,11 @@
                 android:textAlignment="center"
                 android:textColor="@color/default_textColor"
                 android:textColorHint="@color/hintColor"
-                app:layout_constraintEnd_toEndOf="@+id/editText"
-                app:layout_constraintStart_toStartOf="@+id/editText"
-                app:layout_constraintTop_toBottomOf="@+id/editText" />
+                app:layout_constraintEnd_toEndOf="@+id/examTypeED"
+                app:layout_constraintStart_toStartOf="@+id/examTypeED"
+                app:layout_constraintTop_toBottomOf="@+id/examTypeED" />
+
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -117,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/cardView6" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/nextButton"
+        android:id="@+id/uploadButton"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="@drawable/next_btn_bg"

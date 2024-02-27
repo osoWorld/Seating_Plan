@@ -20,6 +20,11 @@
         android:layout_width="match_parent"
         android:layout_height="65dp"
         app:menu="@menu/teacher_bottom_menu"
+        android:background="@color/fav_blue"
+        app:itemTextColor="@color/white"
+        app:itemIconTint="@color/white"
+        app:itemRippleColor="@color/fav_blue"
+        app:itemActiveIndicatorStyle="@color/fav_blue"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

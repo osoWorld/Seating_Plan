@@ -49,4 +49,7 @@
     <color name="default_textColor">#808080</color>
     <color name="hintColor">#C4C4C4</color>
 
+    <color name="bright_purple">#BF40BF</color>
+    <color name="darkPink">#AA336A</color>
+
 </resources>

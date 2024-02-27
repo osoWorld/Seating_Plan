@@ -8,6 +8,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -39,18 +40,13 @@ import java.util.ArrayList;
 
 public class CreateProfileActivity extends AppCompatActivity {
     private ActivityCreateProfileBinding binding;
-    private String currentStatus;
-    private String roleStatus;
+    private String currentStatus, roleStatus, uid, profileLink, userEmail, userPassword;
     private Uri imageUri;
     private FirebaseAuth auth;
     private FirebaseDatabase database;
     private FirebaseStorage firebaseStorage;
     private StorageReference storageReference;
-    private String uid;
-    private String profileLink;
     private ArrayList<String> department;
-    private String userEmail;
-    private String userPassword;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -151,6 +147,9 @@ public class CreateProfileActivity extends AppCompatActivity {
     }
 
     private void uploadImage(String userId, String name, String email, String userPassword, String uid) {
+        ProgressDialog pd = new ProgressDialog(CreateProfileActivity.this);
+        pd.setMessage("Uploading");
+        pd.show();
         if (imageUri != null) {
             storageReference = firebaseStorage.getReference();
             StorageReference imageRef = storageReference.child("Profile Images").child(roleStatus).child(uid);
@@ -161,19 +160,22 @@ public class CreateProfileActivity extends AppCompatActivity {
                     imageRef.getDownloadUrl().addOnSuccessListener(uri -> {
                         profileLink = uri.toString();
                         addToDatabase(userId, name, email, userPassword, profileLink, uid);
+                        pd.dismiss();
                     }).addOnFailureListener(e -> {
                         Toast.makeText(CreateProfileActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        pd.dismiss();
                     });
                 } else {
                     Toast.makeText(CreateProfileActivity.this, task.getException().getMessage(), Toast.LENGTH_SHORT).show();
+                    pd.dismiss();
                 }
             });
         }
     }
 
     private void addToDatabase(String userId, String name, String email, String userPassword, String imageLink, String uid) {
-        DatabaseReference myRef = database.getReference("Seating Plan").child("Profile Details").child(roleStatus);
-        Users obj = new Users(userId, name, userPassword, email, currentStatus, department.toString(), imageLink, uid);
+        DatabaseReference myRef = database.getReference("Seating Plan").child("Profile Details");
+        Users obj = new Users(userId, name, userPassword, email, roleStatus, currentStatus, imageLink, uid, "Absent", "UnAssigned", false);
         myRef.child(uid).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
             @Override
             public void onComplete(@NonNull Task<Void> task) {
