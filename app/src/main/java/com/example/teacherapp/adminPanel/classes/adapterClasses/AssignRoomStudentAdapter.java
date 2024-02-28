@@ -1,5 +1,6 @@
 package com.example.teacherapp.adminPanel.classes.adapterClasses;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.RecyclerviewItemInterface.OnItemClickListener;
 import com.example.teacherapp.adminPanel.adminFragment.AssignSeatsFragment;
 import com.example.teacherapp.adminPanel.classes.modelClasses.AssignRoomModelClass;
 
@@ -22,6 +24,13 @@ import java.util.ArrayList;
 public class AssignRoomStudentAdapter extends RecyclerView.Adapter<AssignRoomStudentAdapter.AssignRoomStudentViewHolder>{
     private ArrayList<AssignRoomModelClass> mList;
     private Context context;
+    private OnItemClickListener mListener;
+
+    // Other methods...
+
+    public void setOnItemClickListener(OnItemClickListener listener) {
+        mListener = listener;
+    }
 
     public AssignRoomStudentAdapter(ArrayList<AssignRoomModelClass> mList, Context context) {
         this.mList = mList;
@@ -36,7 +45,7 @@ public class AssignRoomStudentAdapter extends RecyclerView.Adapter<AssignRoomStu
     }
 
     @Override
-    public void onBindViewHolder(@NonNull AssignRoomStudentViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AssignRoomStudentViewHolder holder, @SuppressLint("RecyclerView") int position) {
         final AssignRoomModelClass data = mList.get(position);
 
         holder.roomIcon.setImageResource(data.getRoomImg());
@@ -45,10 +54,10 @@ public class AssignRoomStudentAdapter extends RecyclerView.Adapter<AssignRoomStu
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-//                (((FragmentActivity)context).getSupportFragmentManager().beginTransaction()
-//                        .replace(R.id.frameAssignRoomsCont, new AssignSeatsFragment())).commit();
-                Toast.makeText(context, "Clicked!", Toast.LENGTH_SHORT).show();
+            public void onClick(View view) {
+                if (mListener != null) {
+                    mListener.onItemClick(position);
+                }
             }
         });
     }

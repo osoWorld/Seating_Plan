@@ -1,5 +1,6 @@
 package com.example.teacherapp.adminPanel.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -16,12 +17,20 @@ import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignRoomStuden
 import com.example.teacherapp.adminPanel.classes.modelClasses.AssignRoomModelClass;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.databinding.ActivityStudentAssignSeatsBinding;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 public class StudentAssignSeatsActivity extends AppCompatActivity {
     private ActivityStudentAssignSeatsBinding binding;
     private ArrayList<AssignRoomModelClass> list;
+    ArrayList<TeacherStudentListModelClass> receivedItems;
+    FirebaseDatabase database;
+    DatabaseReference reference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +54,36 @@ public class StudentAssignSeatsActivity extends AppCompatActivity {
 
         binding.assignSeatRecView.setAdapter(adapter);
         binding.assignSeatRecView.setLayoutManager(new GridLayoutManager(this,2));
-        ArrayList<TeacherStudentListModelClass> receivedItems = (ArrayList<TeacherStudentListModelClass>) getIntent().getSerializableExtra("selectedItems");
-        for (TeacherStudentListModelClass list :receivedItems){
-            Toast.makeText(this, ""+list.getUid(), Toast.LENGTH_SHORT).show();
+        // receiving the students
+        receivedItems = (ArrayList<TeacherStudentListModelClass>) getIntent().getSerializableExtra("selectedItems");
+//        for (TeacherStudentListModelClass list :receivedItems){
+//            Toast.makeText(this, ""+list.getUid(), Toast.LENGTH_SHORT).show();
+//        }
+    }
+        public void Assigned() {
+            database = FirebaseDatabase.getInstance();
+            reference = database.getReference("Seating Plan");
+        for (TeacherStudentListModelClass selected : receivedItems) {
+            // Get the reference to the specific student's node using UID
+            DatabaseReference studentRef = reference.child("Profile Details").child(selected.getUid());
+
+            // Update the seatingStatus to "Assigned"
+            studentRef.child("seatingStatus").setValue("Assigned")
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(getApplicationContext(), "Successfully Assigned", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            // Handle failure
+                        }
+                    });
         }
     }
+
 }
