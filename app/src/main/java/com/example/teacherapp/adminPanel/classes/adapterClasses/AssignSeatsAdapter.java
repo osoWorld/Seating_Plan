@@ -82,30 +82,33 @@ public class AssignSeatsAdapter extends RecyclerView.Adapter<AssignSeatsAdapter.
     public int getItemCount() {
         return mList.size();
     }
-
-    public void Assigned() {
-        for (TeacherStudentListModelClass selected : selectedlist) {
-            // Get the reference to the specific student's node using UID
-            DatabaseReference studentRef = reference.child("Profile Details").child(selected.getUid());
-
-            // Update the seatingStatus to "Assigned"
-            studentRef.child("seatingStatus").setValue("Assigned")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                Toast.makeText(context, "Successfully Assigned", Toast.LENGTH_SHORT).show();
-                            }
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            // Handle failure
-                        }
-                    });
-        }
-    }
+     public ArrayList<TeacherStudentListModelClass> getSelected(){
+        return selectedlist;
+     }
+//    public void Assigned() {
+//
+//        for (TeacherStudentListModelClass selected : selectedlist) {
+//            // Get the reference to the specific student's node using UID
+//            DatabaseReference studentRef = reference.child("Profile Details").child(selected.getUid());
+//
+//            // Update the seatingStatus to "Assigned"
+//            studentRef.child("seatingStatus").setValue("Assigned")
+//                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                        @Override
+//                        public void onComplete(@NonNull Task<Void> task) {
+//                            if (task.isSuccessful()) {
+//                                Toast.makeText(context, "Successfully Assigned", Toast.LENGTH_SHORT).show();
+//                            }
+//                        }
+//                    })
+//                    .addOnFailureListener(new OnFailureListener() {
+//                        @Override
+//                        public void onFailure(@NonNull Exception e) {
+//                            // Handle failure
+//                        }
+//                    });
+//        }
+//    }
 
     class AssignSeatsViewHolder extends RecyclerView.ViewHolder {
         ImageView teacherStudentImg;

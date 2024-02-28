@@ -2,7 +2,9 @@ package com.example.teacherapp.adminPanel.classes.modelClasses;
 
 import com.example.teacherapp.teacherPanel.classes.modelClasses.SelectedItemModel;
 
-public class TeacherStudentListModelClass {
+import java.io.Serializable;
+
+public class TeacherStudentListModelClass implements Serializable {
     String userId, userName, userPassword, userEmail, currentStatus, studentDepartment, imageUrl, uid,seatingStatus ;
     Boolean isSelected;
 

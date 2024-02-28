@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.adminFragment.AssignRoomsFragment;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignRoomStudentAdapter;
 import com.example.teacherapp.adminPanel.classes.modelClasses.AssignRoomModelClass;
+import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.databinding.ActivityStudentAssignSeatsBinding;
 
 import java.util.ArrayList;
@@ -43,6 +45,9 @@ public class StudentAssignSeatsActivity extends AppCompatActivity {
 
         binding.assignSeatRecView.setAdapter(adapter);
         binding.assignSeatRecView.setLayoutManager(new GridLayoutManager(this,2));
-
+        ArrayList<TeacherStudentListModelClass> receivedItems = (ArrayList<TeacherStudentListModelClass>) getIntent().getSerializableExtra("selectedItems");
+        for (TeacherStudentListModelClass list :receivedItems){
+            Toast.makeText(this, ""+list.getUid(), Toast.LENGTH_SHORT).show();
+        }
     }
 }
