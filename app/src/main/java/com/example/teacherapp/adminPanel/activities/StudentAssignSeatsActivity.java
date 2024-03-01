@@ -17,6 +17,7 @@ import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignRoomStuden
 import com.example.teacherapp.adminPanel.classes.modelClasses.AssignRoomModelClass;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.databinding.ActivityStudentAssignSeatsBinding;
+import com.example.teacherapp.modelClass.AssignedSeatModelClass;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -25,12 +26,13 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class StudentAssignSeatsActivity extends AppCompatActivity {
+public class StudentAssignSeatsActivity extends AppCompatActivity implements AssignRoomStudentAdapter.OnItemClickListener {
     private ActivityStudentAssignSeatsBinding binding;
     private ArrayList<AssignRoomModelClass> list;
     ArrayList<TeacherStudentListModelClass> receivedItems;
     FirebaseDatabase database;
     DatabaseReference reference;
+    DatabaseReference refAssingroom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class StudentAssignSeatsActivity extends AppCompatActivity {
         list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
         list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
 
-        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this);
+        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this,this);
 
         binding.assignSeatRecView.setAdapter(adapter);
         binding.assignSeatRecView.setLayoutManager(new GridLayoutManager(this,2));
@@ -60,30 +62,60 @@ public class StudentAssignSeatsActivity extends AppCompatActivity {
 //            Toast.makeText(this, ""+list.getUid(), Toast.LENGTH_SHORT).show();
 //        }
     }
-        public void Assigned() {
-            database = FirebaseDatabase.getInstance();
-            reference = database.getReference("Seating Plan");
-        for (TeacherStudentListModelClass selected : receivedItems) {
-            // Get the reference to the specific student's node using UID
-            DatabaseReference studentRef = reference.child("Profile Details").child(selected.getUid());
 
-            // Update the seatingStatus to "Assigned"
-            studentRef.child("seatingStatus").setValue("Assigned")
+    @Override
+    public void onItemClick(AssignRoomModelClass roomData) {
+        String roomNum = roomData.getRoomName();
+         Assigned(roomNum);
+    }
+    private void Assigned(String roomNum) {
+        database = FirebaseDatabase.getInstance();
+        reference = database.getReference("Seating Plan");
+        refAssingroom = database.getReference("AssignedRooms").child(roomNum);
+
+        DatabaseReference profileDetailsRef = reference.child("Profile Details");
+
+        for (TeacherStudentListModelClass selected : receivedItems) {
+            String uid = selected.getUid();
+
+            profileDetailsRef.child(uid).child("seatingStatus").setValue("Assigned")
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if (task.isSuccessful()) {
-                                Toast.makeText(getApplicationContext(), "Successfully Assigned", Toast.LENGTH_SHORT).show();
+                                assignedRoom(uid, roomNum);
+                            } else {
+                                Toast.makeText(StudentAssignSeatsActivity.this, "Failed to update seating status", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
+                    }).addOnFailureListener(new OnFailureListener() {
                         @Override
                         public void onFailure(@NonNull Exception e) {
-                            // Handle failure
+                            Toast.makeText(StudentAssignSeatsActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
                     });
         }
     }
 
+    private void assignedRoom(String userID, String roomNum) {
+        AssignedSeatModelClass obj = new AssignedSeatModelClass(userID, roomNum);
+
+        refAssingroom.child(userID).setValue(obj)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            Toast.makeText(StudentAssignSeatsActivity.this, "Successfully Assigned", Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(StudentAssignSeatsActivity.this, "Failed to assign room", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(StudentAssignSeatsActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
 }
+

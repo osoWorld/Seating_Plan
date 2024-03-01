@@ -24,17 +24,19 @@ import java.util.ArrayList;
 public class AssignRoomStudentAdapter extends RecyclerView.Adapter<AssignRoomStudentAdapter.AssignRoomStudentViewHolder>{
     private ArrayList<AssignRoomModelClass> mList;
     private Context context;
+
     private OnItemClickListener mListener;
 
+    public interface OnItemClickListener {
+        void onItemClick(AssignRoomModelClass roomData);
+    }
     // Other methods...
 
-    public void setOnItemClickListener(OnItemClickListener listener) {
-        mListener = listener;
-    }
 
-    public AssignRoomStudentAdapter(ArrayList<AssignRoomModelClass> mList, Context context) {
+    public AssignRoomStudentAdapter(ArrayList<AssignRoomModelClass> mList, Context context, OnItemClickListener mListener) {
         this.mList = mList;
         this.context = context;
+        this.mListener = mListener;
     }
 
     @NonNull
@@ -55,9 +57,7 @@ public class AssignRoomStudentAdapter extends RecyclerView.Adapter<AssignRoomStu
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (mListener != null) {
-                    mListener.onItemClick(position);
-                }
+                mListener.onItemClick(data);
             }
         });
     }
