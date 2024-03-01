@@ -41,17 +41,17 @@ public class MainAssignRoomActivity extends AppCompatActivity {
 
 
 
-        list = new ArrayList<>();
+//        list = new ArrayList<>();
+//
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
+//
+//        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this,this);
 
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
-
-        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this);
-
-        binding.roomRecView.setAdapter(adapter);
-        binding.roomRecView.setLayoutManager(new GridLayoutManager(this,2));
+//        binding.roomRecView.setAdapter(adapter);
+//        binding.roomRecView.setLayoutManager(new GridLayoutManager(this,2));
 
 
     }

@@ -18,7 +18,6 @@ import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.activities.StudentAssignSeatsActivity;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignSeatsAdapter;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
-import com.example.teacherapp.databinding.FragmentAssignRoomsBinding;
 import com.example.teacherapp.databinding.FragmentUnAssignSeatBinding;
 import com.example.teacherapp.teacherPanel.classes.modelClasses.SelectedItemModel;
 import com.google.firebase.database.DataSnapshot;

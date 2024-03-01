@@ -105,6 +105,7 @@ public class StudentAssignSeatsActivity extends AppCompatActivity implements Ass
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
                         if (task.isSuccessful()) {
+                            startActivity(new Intent(StudentAssignSeatsActivity.this,AdminDashboardActivity.class));
                             Toast.makeText(StudentAssignSeatsActivity.this, "Successfully Assigned", Toast.LENGTH_SHORT).show();
                         } else {
                             Toast.makeText(StudentAssignSeatsActivity.this, "Failed to assign room", Toast.LENGTH_SHORT).show();

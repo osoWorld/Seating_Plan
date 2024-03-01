@@ -29,17 +29,17 @@ public class AssignRoomsFragment extends Fragment {
         // Inflate the layout for this fragment
         binding = FragmentAssignRoomsBinding.inflate(inflater,container,false);
 
-        list = new ArrayList<>();
-
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
-
-        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,getContext());
-
-        binding.roomAssignRecyclerView.setAdapter(adapter);
-        binding.roomAssignRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
+//        list = new ArrayList<>();
+//
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
+//        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
+//
+//        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,getContext());
+//
+//        binding.roomAssignRecyclerView.setAdapter(adapter);
+//        binding.roomAssignRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),2));
 
         return binding.getRoot();
     }

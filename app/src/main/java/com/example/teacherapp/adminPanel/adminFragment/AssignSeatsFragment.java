@@ -44,8 +44,8 @@ public class AssignSeatsFragment extends Fragment {
 
         AssignSeatStudentAdapter adapter = new AssignSeatStudentAdapter(list,getContext());
 
-        binding.seatAssignRecyclerView.setAdapter(adapter);
-        binding.seatAssignRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
+//        binding.seatAssignRecyclerView.setAdapter(adapter);
+//        binding.seatAssignRecyclerView.setLayoutManager(new GridLayoutManager(getContext(),3));
 
         return binding.getRoot();
     }
