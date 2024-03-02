@@ -1,14 +1,15 @@
 package com.example.teacherapp.modelClass;
 
 public class AssignedSeatModelClass {
-    String userID,roomnum;
+    String userID,roomnum,seatnumber;
 
     public AssignedSeatModelClass() {
     }
 
-    public AssignedSeatModelClass(String userID, String roomnum) {
+    public AssignedSeatModelClass(String userID, String roomnum, String seatnumber) {
         this.userID = userID;
         this.roomnum = roomnum;
+        this.seatnumber = seatnumber;
     }
 
     public String getUserID() {
@@ -25,5 +26,13 @@ public class AssignedSeatModelClass {
 
     public void setRoomnum(String roomnum) {
         this.roomnum = roomnum;
+    }
+
+    public String getSeatnumber() {
+        return seatnumber;
+    }
+
+    public void setSeatnumber(String seatnumber) {
+        this.seatnumber = seatnumber;
     }
 }

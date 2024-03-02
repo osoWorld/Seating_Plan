@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
@@ -33,6 +34,7 @@ public class StudentAssignSeatsActivity extends AppCompatActivity implements Ass
     FirebaseDatabase database;
     DatabaseReference reference;
     DatabaseReference refAssingroom;
+   private  int counter = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,31 +76,39 @@ public class StudentAssignSeatsActivity extends AppCompatActivity implements Ass
         refAssingroom = database.getReference("AssignedRooms").child(roomNum);
 
         DatabaseReference profileDetailsRef = reference.child("Profile Details");
-
+        if (counter<=30){
         for (TeacherStudentListModelClass selected : receivedItems) {
-            String uid = selected.getUid();
 
-            profileDetailsRef.child(uid).child("seatingStatus").setValue("Assigned")
-                    .addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if (task.isSuccessful()) {
-                                assignedRoom(uid, roomNum);
-                            } else {
-                                Toast.makeText(StudentAssignSeatsActivity.this, "Failed to update seating status", Toast.LENGTH_SHORT).show();
+                String uid = selected.getUid();
+                counter++;
+
+                String finalCounter = String.valueOf(counter);
+                Log.d( "Assigned: ",finalCounter);
+                profileDetailsRef.child(uid).child("seatingStatus").setValue("Assigned")
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    assignedRoom(uid, roomNum, finalCounter);
+                                } else {
+                                    Toast.makeText(StudentAssignSeatsActivity.this, "Failed to update seating status", Toast.LENGTH_SHORT).show();
+                                }
                             }
-                        }
-                    }).addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(StudentAssignSeatsActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                        }).addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(StudentAssignSeatsActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+
+        }else{
+            Toast.makeText(this, "Room is Full", Toast.LENGTH_SHORT).show();
         }
     }
 
-    private void assignedRoom(String userID, String roomNum) {
-        AssignedSeatModelClass obj = new AssignedSeatModelClass(userID, roomNum);
+    private void assignedRoom(String userID, String roomNum,String seatnumber) {
+        AssignedSeatModelClass obj = new AssignedSeatModelClass(userID, roomNum,seatnumber);
 
         refAssingroom.child(userID).setValue(obj)
                 .addOnCompleteListener(new OnCompleteListener<Void>() {
