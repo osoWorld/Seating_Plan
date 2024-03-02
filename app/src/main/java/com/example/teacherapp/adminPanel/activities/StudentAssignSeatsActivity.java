@@ -49,10 +49,10 @@ public class StudentAssignSeatsActivity extends AppCompatActivity implements Ass
 
         list = new ArrayList<>();
 
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"121"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"122"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door,"123"));
         list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
 
         AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this,this);
 

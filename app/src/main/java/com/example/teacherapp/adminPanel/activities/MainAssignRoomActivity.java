@@ -31,27 +31,13 @@ public class MainAssignRoomActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
-        Intent intent = getIntent();
-
-        String teacherName = intent.getStringExtra("teacherName");
-        String teacherRollNumber = intent.getStringExtra("teacherRollNumber");
-        String teacherDepartment = intent.getStringExtra("teacherDepartment");
-
-        int teacherImg = intent.getIntExtra("teacherPic", 0);
 
 
 
-//        list = new ArrayList<>();
-//
-//        list.add(new AssignRoomModelClass(R.drawable.room_door,"120"));
-//        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
-//        list.add(new AssignRoomModelClass(R.drawable.room_door,"128"));
-//        list.add(new AssignRoomModelClass(R.drawable.room_door,"132"));
-//
-//        AssignRoomStudentAdapter adapter = new AssignRoomStudentAdapter(list,this,this);
 
-//        binding.roomRecView.setAdapter(adapter);
-//        binding.roomRecView.setLayoutManager(new GridLayoutManager(this,2));
+
+
+
 
 
     }
