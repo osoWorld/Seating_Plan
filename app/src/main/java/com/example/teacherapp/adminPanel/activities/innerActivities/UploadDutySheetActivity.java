@@ -17,9 +17,10 @@ import com.example.teacherapp.databinding.ActivityUploadDutySheetBinding;
 
 import java.util.ArrayList;
 
-public class UploadDutySheetActivity extends AppCompatActivity {
+public class UploadDutySheetActivity extends AppCompatActivity implements AssignRoomDutySheetAdapter.OnItemClickListener {
     private ActivityUploadDutySheetBinding binding;
     private ArrayList<AssignRoomModelClass> list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,20 +35,27 @@ public class UploadDutySheetActivity extends AppCompatActivity {
 
         list = new ArrayList<>();
 
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"121"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"122"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"123"));
-        list.add(new AssignRoomModelClass(R.drawable.room_door,"124"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door, "121"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door, "122"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door, "123"));
+        list.add(new AssignRoomModelClass(R.drawable.room_door, "124"));
 
-        AssignRoomDutySheetAdapter adapter = new AssignRoomDutySheetAdapter(list,this,this);
+        AssignRoomDutySheetAdapter adapter = new AssignRoomDutySheetAdapter(list, this, this);
 
         binding.assignSeatRecView.setAdapter(adapter);
-        binding.assignSeatRecView.setLayoutManager(new GridLayoutManager(this,2));
+        binding.assignSeatRecView.setLayoutManager(new GridLayoutManager(this, 2));
 
     }
 
     @Override
     public void onBackPressed() {
         startActivity(new Intent(UploadDutySheetActivity.this, AdminDashboardActivity.class));
+    }
+
+    @Override
+    public void onItemClick(AssignRoomModelClass roomData) {
+        String roomNum = roomData.getRoomName();
+        startActivity(new Intent(getApplicationContext(), AssignDutyTOTeacherActivity.class)
+                .putExtra("roomkey", roomNum));
     }
 }

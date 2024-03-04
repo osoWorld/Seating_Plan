@@ -29,7 +29,7 @@ public class AssignRoomStudentAdapter extends RecyclerView.Adapter<AssignRoomStu
     // Other methods...
 
 
-    public AssignRoomStudentAdapter(ArrayList<AssignRoomModelClass> mList, Context context, UploadDutySheetActivity mListener) {
+    public AssignRoomStudentAdapter(ArrayList<AssignRoomModelClass> mList, Context context, OnItemClickListener mListener) {
         this.mList = mList;
         this.context = context;
         this.mListener = mListener;
