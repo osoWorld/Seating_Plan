@@ -13,6 +13,7 @@ import com.example.teacherapp.databinding.FragmentTeacherDutySheetBinding;
 
 public class TeacherDutySheetFragment extends Fragment {
     private FragmentTeacherDutySheetBinding binding;
+
     public TeacherDutySheetFragment() {
         // Required empty public constructor
     }
@@ -26,4 +27,6 @@ public class TeacherDutySheetFragment extends Fragment {
 
         return binding.getRoot();
     }
+
+
 }

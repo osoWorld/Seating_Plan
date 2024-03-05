@@ -1,15 +1,24 @@
 package com.example.teacherapp.modelClass;
 
 public class ViewDutySheetModelClass {
-    String seatnumber,username,userdepartment;
+    String userID,seatnumber,username,userdepartment;
 
     public ViewDutySheetModelClass() {
     }
 
-    public ViewDutySheetModelClass(String seatnumber, String username, String userdepartment) {
+    public ViewDutySheetModelClass(String userID, String seatnumber, String username, String userdepartment) {
+        this.userID = userID;
         this.seatnumber = seatnumber;
         this.username = username;
         this.userdepartment = userdepartment;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
     }
 
     public String getSeatnumber() {
