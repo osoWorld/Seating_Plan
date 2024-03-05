@@ -2,31 +2,33 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
     android:padding="20dp"
-    tools:context=".adminPanel.activities.AdminDashboardActivity">
+    tools:context=".adminPanel.activities.innerActivities.ViewAttendanceActivity">
 
     <TextView
-        android:id="@+id/textView17"
+        android:id="@+id/textView21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:fontFamily="@font/poppins_thin"
-        android:text="Admin Dashboard"
+        android:layout_marginTop="5dp"
+        android:text="View Attendance"
         android:textColor="@color/black"
-        android:textSize="38sp"
+        android:textSize="32sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/adminDashboardRecView"
+        android:id="@+id/presetRoomsRecView"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/textView17"
-        app:layout_constraintStart_toStartOf="@+id/textView17"
-        app:layout_constraintTop_toBottomOf="@+id/textView17" />
+        app:layout_constraintEnd_toEndOf="@+id/textView21"
+        app:layout_constraintStart_toStartOf="@+id/textView21"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

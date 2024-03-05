@@ -22,8 +22,10 @@ import com.example.teacherapp.adminPanel.activities.innerActivities.AssignRoomsA
 import com.example.teacherapp.adminPanel.activities.innerActivities.AssignSeatsActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.StudentListActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.TeacherListActivity;
+import com.example.teacherapp.adminPanel.activities.innerActivities.TeachersDetaislActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.UploadDateSheetActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.UploadDutySheetActivity;
+import com.example.teacherapp.adminPanel.activities.innerActivities.ViewAttendanceActivity;
 import com.example.teacherapp.adminPanel.classes.modelClasses.AdminDashboardItemsModelClass;
 import com.example.teacherapp.sharedPrefrences.PrefManager;
 import com.google.firebase.auth.FirebaseAuth;
@@ -42,7 +44,7 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
     @NonNull
     @Override
     public AdminDashboardViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_items_layout,parent,false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.admin_items_layout, parent, false);
         return new AdminDashboardViewHolder(view);
     }
 
@@ -57,7 +59,7 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
             public void onClick(View v) {
                 int id = data.getItemPosition();
 
-                if (id == 1){
+                if (id == 1) {
                     context.startActivity(new Intent(context, StudentListActivity.class));
                 } else if (id == 2) {
                     context.startActivity(new Intent(context, TeacherListActivity.class));
@@ -93,7 +95,11 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
 
-                }else {
+                } else if (id == 9) {
+                    context.startActivity(new Intent(context, ViewAttendanceActivity.class));
+                } else if (id == 10) {
+                    context.startActivity(new Intent(context, TeachersDetaislActivity.class));
+                } else {
 
                 }
             }
@@ -108,6 +114,7 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
     class AdminDashboardViewHolder extends RecyclerView.ViewHolder {
         ImageView itemIcon;
         TextView itemName;
+
         public AdminDashboardViewHolder(@NonNull View itemView) {
             super(itemView);
 

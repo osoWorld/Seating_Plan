@@ -1,6 +1,7 @@
 package com.example.teacherapp.adminPanel.classes.adapterClasses;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.activities.RoomOfStudentAttendanceActivity;
 import com.example.teacherapp.adminPanel.classes.modelClasses.AssignRoomModelClass;
 
 import java.util.ArrayList;

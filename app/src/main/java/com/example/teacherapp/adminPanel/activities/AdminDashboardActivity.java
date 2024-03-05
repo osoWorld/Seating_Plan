@@ -39,6 +39,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
         list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_file_upload_24, "Upload Duty Sheet", 4));
         list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_chair_alt_24,"Assign Seats",5));
         list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_home_filled_24,"Assign Rooms",6));
+        list.add(new AdminDashboardItemsModelClass(R.drawable.attendance_admin,"Attendance",9));
+        list.add(new AdminDashboardItemsModelClass(R.drawable.teacher,"Teachers Details",10));
         list.add(new AdminDashboardItemsModelClass(R.drawable.user_my,"Update Profile",7));
         list.add(new AdminDashboardItemsModelClass(R.drawable.log_out,"Log out",8));
 

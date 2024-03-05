@@ -65,7 +65,7 @@ public class StudentAttendanceActivity extends AppCompatActivity {
             }
         });
 
-        reference = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child("Student");
+        reference = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
