@@ -59,6 +59,6 @@ public class ViewAttendanceActivity extends AppCompatActivity implements AssignR
 
     @Override
     public void onItemClick(AssignRoomModelClass roomData) {
-        startActivity(new Intent(this, RoomOfStudentAttendanceActivity.class));
+        startActivity(new Intent(this, RoomOfStudentAttendanceActivity.class).putExtra("RoomKey",roomData.getRoomName()));
     }
 }

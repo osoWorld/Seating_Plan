@@ -82,18 +82,26 @@ public class UnAssignSeatFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
-                    if (model.getSeatingStatus().equals("UnAssigned")) {
-                        list.add(model);
-                        binding.progressB.setVisibility(View.GONE);
+                if (snapshot.exists()){
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
+                        String status = model.getCurrentStatus();
+                        if (model.getSeatingStatus().equals("UnAssigned") && status.equals("Student")) {
+                            list.add(model);
+                            binding.progressB.setVisibility(View.GONE);
 
-                        Log.d("Det", model.getUserName() + "UID: " + model.getUserId() + "Status" + model.getIsSelected());
-                    }
+                            Log.d("Det", model.getUserName() + "UID: " + model.getUserId() + "Status" + model.getIsSelected());
+                        }
+
 //                    list.add(model);
 //                    binding.progressB.setVisibility(View.GONE);
-                    Log.d("UserNam", model.getUserName() + " UserId: " + model.getUid());
+                        Log.d("UserNam", model.getUserName() + " UserId: " + model.getUid());
+                    }
+                }else{
+                    binding.progressB.setVisibility(View.GONE);
+                    Toast.makeText(requireContext(), "no Data Found", Toast.LENGTH_SHORT).show();
                 }
+
 
                 adapter.notifyDataSetChanged();
             }

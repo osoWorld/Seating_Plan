@@ -48,7 +48,7 @@ public class UploadDateSheetActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
-        binding.galleryButton.setOnClickListener(new View.OnClickListener() {
+        binding.pickImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent galleryIntent = new Intent(Intent.ACTION_PICK);
@@ -76,7 +76,7 @@ public class UploadDateSheetActivity extends AppCompatActivity {
     private void updateProfile(String department, String examType, String imageUri) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef =
-                database.getReference("Seating Plan")
+                database.getReference("DutySheet")
                         .child(department)
                         .child(examType);
 
@@ -90,7 +90,7 @@ public class UploadDateSheetActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<Void> task) {
                 if (task.isSuccessful()) {
                     binding.progressBar.setVisibility(View.GONE);
-                    //                   Toast.makeText(getContext(), "Updated Profile", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getApplicationContext(), "Uploaded", Toast.LENGTH_SHORT).show();
 //                    getUserData();
                 }
             }

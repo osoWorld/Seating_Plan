@@ -34,12 +34,14 @@ public class RoomOfStudentAttendanceActivity extends AppCompatActivity {
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.fav_blue));
 
-
+         String data = getIntent().getStringExtra("RoomKey");
+        Bundle bundle = new Bundle();
+        bundle.putString("RoomData", data);
         viewPagerAdapter = new ViewAttendanceAdapter(
-                getSupportFragmentManager());
+                getSupportFragmentManager(),bundle);
         binding.viewPager.setAdapter(viewPagerAdapter);
 
-
+        binding.viewPager.setOffscreenPageLimit(2);
         binding.tabLayout.setupWithViewPager(binding.viewPager);
     }
 }

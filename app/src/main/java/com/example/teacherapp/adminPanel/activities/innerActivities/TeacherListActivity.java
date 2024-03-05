@@ -45,19 +45,25 @@ public class TeacherListActivity extends AppCompatActivity {
         adapter = new TeacherStudentListAdapter(list,this);
         binding.progressB.setVisibility(View.VISIBLE);
 
-        reference = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child("Teacher");
+        reference = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details");
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()){
-                    TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
-                    if (model != null) {
-                        list.add(model);
-                        binding.progressB.setVisibility(View.GONE);
+                if (snapshot.exists()){
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()){
+                        TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
+                        String status = model.getCurrentStatus();
+                        if (status.equals("Teacher")) {
+                            list.add(model);
+                            binding.progressB.setVisibility(View.GONE);
+                        }
+                        Log.d("UserNam",model.getUserName()+" UserId: "+model.getUid());
                     }
-                    Log.d("UserNam",model.getUserName()+" UserId: "+model.getUid());
+                }else{
+                    binding.progressB.setVisibility(View.GONE);
+
                 }
 
                 adapter.notifyDataSetChanged();

@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignSeatsAdapter;
 import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
@@ -55,18 +56,23 @@ public class AssignedSeatsFragment extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 list.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
-                    if (model.getSeatingStatus().equals("Assigned")) {
-                        list.add(model);
-                        binding.progressB.setVisibility(View.GONE);
+                if (snapshot != null) {
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        TeacherStudentListModelClass model = snapshot1.getValue(TeacherStudentListModelClass.class);
+                        String status = model.getCurrentStatus();
+                        if (model.getSeatingStatus().equals("Assigned") && status.equals("Student")) {
+                            list.add(model);
+                            binding.progressB.setVisibility(View.GONE);
 
-                        Log.d("Det", model.getUserName() + "UID: " + model.getUserId() + "Status" + model.getIsSelected());
+                            Log.d("Det", model.getUserName() + "UID: " + model.getUserId() + "Status" + model.getIsSelected());
+                        }
+                        Log.d("UserNam", model.getUserName() + " UserId: " + model.getUid());
                     }
-//                    list.add(model);
-//                    binding.progressB.setVisibility(View.GONE);
-                    Log.d("UserNam", model.getUserName() + " UserId: " + model.getUid());
+                } else {
+                    binding.progressB.setVisibility(View.GONE);
+                    Toast.makeText(requireContext(), "No Data Found", Toast.LENGTH_SHORT).show();
                 }
+
 
                 adapter.notifyDataSetChanged();
             }
