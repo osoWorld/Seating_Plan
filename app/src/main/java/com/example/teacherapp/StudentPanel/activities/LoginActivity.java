@@ -49,7 +49,7 @@ public class LoginActivity extends AppCompatActivity {
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
-        reference = database.getReference();
+        reference = database.getReference("Seating Plan").child("Profile Details");
 
 
         prefManager = new PrefManager(this);
@@ -105,39 +105,36 @@ public class LoginActivity extends AppCompatActivity {
                     reference.child(userId).addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Users currentStatusDetails= snapshot.getValue(Users.class);
-//                            System.out.println("user status______________________"+currentStatusDetails.getCurrentStatus());
-                            if (currentStatusDetails.getCurrentStatus().equals("Admin")){
-                                prefManager.setCurrentstatus("Admin");
-                                prefManager.setUserID(userId);
-                                Intent intent=new Intent(getApplicationContext(), AdminDashboardActivity.class);
-                                startActivity(intent);
-                                binding.progressBarLogin.setVisibility(View.GONE);
-                                //next proccess
-                            }else if (currentStatusDetails.getCurrentStatus().equals("Teacher")) {
-                                prefManager.setCurrentstatus("Teacher");
-                                prefManager.setUserID(userId);
-                                Intent intent = new Intent(getApplicationContext(), TeacherDashboardActivity.class);
-                                startActivity(intent);
-                                binding.progressBarLogin.setVisibility(View.GONE);
-                                // next 2nd step
-                            } else if (currentStatusDetails.getCurrentStatus().equals("Student")) {
-                                prefManager.setCurrentstatus("Student");
-                                prefManager.setUserID(userId);
-                                Intent intent = new Intent(getApplicationContext(), StudentsDashboardActivity.class);
-                                startActivity(intent);
-                                binding.progressBarLogin.setVisibility(View.GONE);
+                            if (snapshot.exists()) {
+                                Users obj = snapshot.getValue(Users.class);
+                                String status = obj.getCurrentStatus();
+                                if (status.equals("Admin")){
+                                    prefManager.setCurrentstatus("Admin");
+                                    prefManager.setUserID(userId);
+                                    Intent intent=new Intent(getApplicationContext(), AdminDashboardActivity.class);
+                                    startActivity(intent);
+                                    binding.progressBarLogin.setVisibility(View.GONE);
+                                    //next proccess
+                                }else if (status.equals("Teacher")) {
+                                    prefManager.setCurrentstatus("Teacher");
+                                    prefManager.setUserID(userId);
+                                    Intent intent = new Intent(getApplicationContext(), TeacherDashboardActivity.class);
+                                    startActivity(intent);
+                                    binding.progressBarLogin.setVisibility(View.GONE);
+                                    // next 2nd step
+                                } else if (status.equals("Student")) {
+                                    prefManager.setCurrentstatus("Student");
+                                    prefManager.setUserID(userId);
+                                    Intent intent = new Intent(getApplicationContext(), StudentsDashboardActivity.class);
+                                    startActivity(intent);
+                                    binding.progressBarLogin.setVisibility(View.GONE);
+                                }
                             }
-//                            }else if (currentStatusDetails.getCurentstatus().equals("Admin")){
-//                                prefManager.setCurrentstatus("Admin");
-//                                prefManager.setUserID(currentUser.toString());
-//                                Intent intent=new Intent(getApplicationContext(),AdminDashboard.class);
-//                                startActivity(intent);
-//
-//                                // 3rd step
-//                            }
 
-                        }
+                            }
+
+
+
 
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {

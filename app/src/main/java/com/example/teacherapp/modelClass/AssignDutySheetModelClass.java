@@ -1,23 +1,24 @@
 package com.example.teacherapp.modelClass;
 
 public class AssignDutySheetModelClass {
-    String userID,userRoom,Teachername;
+    String StudentuserID,userRoom,Teachername,TeacherID;
 
-    public AssignDutySheetModelClass(String userID, String userRoom, String teachername) {
-        this.userID = userID;
+    public AssignDutySheetModelClass(String studentuserID, String userRoom, String teachername, String teacherID) {
+        StudentuserID = studentuserID;
         this.userRoom = userRoom;
         Teachername = teachername;
+        TeacherID = teacherID;
     }
 
     public AssignDutySheetModelClass() {
     }
 
     public String getUserID() {
-        return userID;
+        return StudentuserID;
     }
 
     public void setUserID(String userID) {
-        this.userID = userID;
+        this.StudentuserID = userID;
     }
 
     public String getUserRoom() {
@@ -34,5 +35,13 @@ public class AssignDutySheetModelClass {
 
     public void setTeachername(String teachername) {
         Teachername = teachername;
+    }
+
+    public String getTeacherID() {
+        return TeacherID;
+    }
+
+    public void setTeacherID(String teacherID) {
+        TeacherID = teacherID;
     }
 }

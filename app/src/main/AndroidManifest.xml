@@ -70,11 +70,6 @@
         <activity
             android:name=".adminPanel.activities.AdminDashboardActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity
             android:name=".teacherPanel.activities.StudentAttendanceActivity"
@@ -84,7 +79,9 @@
             android:exported="true" />
         <activity
             android:name=".StudentPanel.activities.StudentsDashboardActivity"
-            android:exported="true" />
+            android:exported="true" >
+
+        </activity>
         <activity
             android:name=".teacherPanel.activities.TeacherDetailCheckActivity"
             android:exported="false" />
@@ -96,7 +93,9 @@
             android:exported="false" />
         <activity
             android:name=".StudentPanel.activities.StudentDashboardActivity"
-            android:exported="false" />
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".StudentPanel.activities.ForgetPasswordActivity"
             android:exported="false" />
@@ -108,7 +107,13 @@
             android:exported="false" />
         <activity
             android:name=".splashScreen.MySplashScreenActivity"
-            android:exported="true" />
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".MainActivity"
             android:exported="false" />

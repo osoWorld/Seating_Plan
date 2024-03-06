@@ -41,7 +41,7 @@ public class Room123Fragment extends Fragment {
                              Bundle savedInstanceState) {
         binding = FragmentRoom123Binding.inflate(inflater,container,false);
 
-
+        getRoomData();
 
         return binding.getRoot();
     }

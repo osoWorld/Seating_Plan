@@ -20,8 +20,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.activities.AdminDashboardActivity;
 import com.example.teacherapp.databinding.ActivitySignupBinding;
 import com.example.teacherapp.modelClass.Users;
+import com.example.teacherapp.sharedPrefrences.PrefManager;
+import com.example.teacherapp.teacherPanel.activities.TeacherDashboardActivity;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -51,6 +54,8 @@ public class SignupActivity extends AppCompatActivity {
     GoogleSignInClient mGoogleSignInClient;
     int RC_SIGN_IN = 20;
     ArrayList<String> arrayList;
+    PrefManager prefManager;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +66,8 @@ public class SignupActivity extends AppCompatActivity {
         window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
         window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         window.setStatusBarColor(getResources().getColor(R.color.white));
+        //
+        prefManager=new PrefManager(this);
 
         auth = FirebaseAuth.getInstance();
         database = FirebaseDatabase.getInstance();
@@ -156,6 +163,8 @@ public class SignupActivity extends AppCompatActivity {
                             .putExtra("status",currentStatus)
                             .putExtra("stuEmail",email)
                             .putExtra("userPassword",password));
+                    prefManager.setCurrentstatus(currentStatus);
+
 
                     binding.progressBar.setVisibility(View.GONE);
                 }
@@ -167,7 +176,7 @@ public class SignupActivity extends AppCompatActivity {
 //    private void addToDatabase(String userId, String name, String email, String userPassword) {
 //        FirebaseDatabase database = FirebaseDatabase.getInstance();
 //        DatabaseReference myRef = database.getReference("Seating Plan").child("Account Details");
-//        Users obj=new Users(userId,name, userPassword,email,currentStatus);
+////        Users obj=new Users(userId,name, userPassword,email,currentStatus);
 //        myRef.child(userId).setValue(obj).addOnCompleteListener(new OnCompleteListener<Void>() {
 //            @Override
 //            public void onComplete(@NonNull Task<Void> task) {
@@ -245,6 +254,23 @@ public class SignupActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+    @Override
+    protected void onStart() {
+        super.onStart();
+        PrefManager prefManager1= new PrefManager(getApplicationContext());
+        if (prefManager1.getCurrentstatus().equals("Admin")){
+            //step 1.
+            Intent intent=new Intent(getApplicationContext(), AdminDashboardActivity.class);
+            startActivity(intent);
+        }else if(prefManager1.getCurrentstatus().equals("Teacher")) {
+            Intent intent = new Intent(getApplicationContext(), TeacherDashboardActivity.class);
+            startActivity(intent);
+        }else if(prefManager1.getCurrentstatus().equals("Student")) {
+            Intent intent = new Intent(getApplicationContext(), StudentsDashboardActivity.class);
+            startActivity(intent);
+        }
+
     }
 
     @Override

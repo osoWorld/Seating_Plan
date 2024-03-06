@@ -85,7 +85,7 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
         adapter = new ViewDutyStudentListAdapter(datalist, getApplicationContext());
         binding.progressB.setVisibility(View.VISIBLE);
 
-        reference = FirebaseDatabase.getInstance().getReference("AssignedRooms").child("124");
+        reference = FirebaseDatabase.getInstance().getReference("AssignedRooms").child(roonnum);
 
         reference.addValueEventListener(new ValueEventListener() {
             @Override
@@ -198,19 +198,22 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
 
                         // Save the assignment to Firebase using the UID
                         DatabaseReference assignmentRef = FirebaseDatabase.getInstance().getReference("AssignDuty").child("Teacher");
+                        DatabaseReference assigndutyDetailstRef = FirebaseDatabase.getInstance().getReference("TeacherAssignDuty").child("Details");
+
                         for (ViewDutySheetModelClass data : datalist) {
                             String userID = data.getUserID();
                             // Create an instance of AssignDutySheetModelClass
-                            AssignDutySheetModelClass obj2 = new AssignDutySheetModelClass(userID, roomdata, selectedteacher);
+                            DutyDetailsModeClass obj3 =new DutyDetailsModeClass(selectedTeacherUid,roomdata,userID);
+                            String key = assigndutyDetailstRef.getKey().toString();
+                            AssignDutySheetModelClass obj2 = new AssignDutySheetModelClass(userID, roomdata, selectedteacher,selectedTeacherUid);
                             // Save the assignment to Firebase using the UID of the selected teacher
-                            assignmentRef.child(selectedTeacherUid).child(roomdata).child(userID).setValue(obj2)
+                            assignmentRef.child(userID).setValue(obj2)
+
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
-                                                DutyDetailsModeClass obj2 =new DutyDetailsModeClass(selectedTeacherUid,roomdata);
-                                                DatabaseReference assigndutyDetailstRef = FirebaseDatabase.getInstance().getReference("TeacherAssignDuty").child("Details");
-                                                assigndutyDetailstRef.child(selectedTeacherUid).setValue(obj2);
+                                                assigndutyDetailstRef.child(selectedTeacherUid).child(key).setValue(obj3);
                                                 sendMessage();
                                                 Toast.makeText(AssignDutyTOTeacherActivity.this, "Duty assigned successfully", Toast.LENGTH_SHORT).show();
                                             } else {

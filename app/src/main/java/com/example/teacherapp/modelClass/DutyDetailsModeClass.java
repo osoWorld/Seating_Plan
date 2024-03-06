@@ -1,14 +1,15 @@
 package com.example.teacherapp.modelClass;
 
 public class DutyDetailsModeClass {
-    String TeacherID,RoomData;
+    String TeacherID,RoomData,StudentID;
 
     public DutyDetailsModeClass() {
     }
 
-    public DutyDetailsModeClass(String teacherID, String roomData) {
+    public DutyDetailsModeClass(String teacherID, String roomData, String studentID) {
         TeacherID = teacherID;
         RoomData = roomData;
+        StudentID = studentID;
     }
 
     public String getTeacherID() {
@@ -25,5 +26,13 @@ public class DutyDetailsModeClass {
 
     public void setRoomData(String roomData) {
         RoomData = roomData;
+    }
+
+    public String getStudentID() {
+        return StudentID;
+    }
+
+    public void setStudentID(String studentID) {
+        StudentID = studentID;
     }
 }

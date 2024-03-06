@@ -36,6 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:hint="Term"
+            android:id="@+id/termID"
             android:textAlignment="center"
             android:textSize="18sp"
             android:gravity="center"
@@ -45,6 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="57dp"
             android:hint="Department"
+            android:id="@+id/departmentID"
             android:textAlignment="center"
             android:textSize="18sp"
             android:gravity="center"
@@ -72,6 +74,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="centerCrop"
+            android:id="@+id/imageID"
             android:src="@drawable/riphah3" />
 
     </androidx.cardview.widget.CardView>
@@ -90,5 +93,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/cardView"
         app:layout_constraintStart_toStartOf="@+id/cardView" />
-
+    <ProgressBar
+        android:id="@+id/progressB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

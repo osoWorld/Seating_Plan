@@ -14,11 +14,15 @@ import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.databinding.ActivityStudentAttendanceBinding;
+import com.example.teacherapp.modelClass.DutyDetailsModeClass;
 import com.example.teacherapp.teacherPanel.classes.adapterClasses.StudentAttendanceAdapter;
 import com.example.teacherapp.teacherPanel.classes.modelClasses.StudentAttendanceModelClass;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,7 +39,10 @@ public class StudentAttendanceActivity extends AppCompatActivity {
     private ArrayList<StudentAttendanceModelClass> list;
     private DatabaseReference reference;
     private StudentAttendanceAdapter adapter;
-    private String userId, userName, userEmail, studentDepartment, imageUrl, uid, studentAttendance;
+    FirebaseAuth auth;
+    FirebaseUser user;
+    String roomData;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,43 +71,64 @@ public class StudentAttendanceActivity extends AppCompatActivity {
 
             }
         });
+        //current login Id
+        auth = FirebaseAuth.getInstance();
+        if (user!=null){
+            String currentloginID = user.getUid().toString();
+            reference = FirebaseDatabase.getInstance().getReference(
+                    "TeacherAssignDuty").child("Details");
 
-        reference = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details");
+            reference.child(currentloginID).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    list.clear();
+                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                        DutyDetailsModeClass model = snapshot1.getValue(DutyDetailsModeClass.class);
+                        String userID  = model.getStudentID();
+                        roomData = model.getRoomData();
 
-        reference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                list.clear();
-                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                    StudentAttendanceModelClass model = snapshot1.getValue(StudentAttendanceModelClass.class);
-                    if (model != null) {
-                        list.add(model);
-                        binding.progressB.setVisibility(View.GONE);
+                        if (userID != null) {
+                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details");
+                            ref.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()){
+                                        StudentAttendanceModelClass obj = snapshot.getValue(StudentAttendanceModelClass.class);
+                                        Log.d("userIds",obj.getUserName());
+                                        list.add(obj);
+                                        binding.progressB.setVisibility(View.GONE);
 
-                        userId = model.getUserId();
-                        userName = model.getUserName();
-                        userEmail = model.getUserEmail();
-                        studentDepartment = model.getStudentDepartment();
-                        imageUrl = model.getImageUrl();
-                        uid = model.getUid();
+                                        adapter.notifyDataSetChanged();
+                                    }
+                                }
 
-                        Log.d("UserNam", model.getUserName() + " UserId: " + model.getUserId());
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Toast.makeText(getApplicationContext(), "FT"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                                    binding.progressB.setVisibility(View.GONE);
+                                }
+                            });
+
+                            binding.progressB.setVisibility(View.GONE);
+
+                        }
+
                     }
 
+                    adapter.notifyDataSetChanged();
                 }
 
-                adapter.notifyDataSetChanged();
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
+                }
+            });
 
 
-        binding.studentAttendanceSheetRecyclerView.setAdapter(adapter);
-        binding.studentAttendanceSheetRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+            binding.studentAttendanceSheetRecyclerView.setAdapter(adapter);
+            binding.studentAttendanceSheetRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        }
 
 
     }
@@ -116,10 +144,10 @@ public class StudentAttendanceActivity extends AppCompatActivity {
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.getDefault());
         String currentDate = dateFormat.format(new Date());
 
-        reference = FirebaseDatabase.getInstance().getReference("Seating Plan")
+        reference = FirebaseDatabase.getInstance().getReference("Attendance Seating Plan")
                 .child("Attendance")
-                .child("Room")
-                .child(currentDate);
+                .child(roomData);
+
 
         for (StudentAttendanceModelClass student : list) {
             String uid = student.getUid();
@@ -128,8 +156,8 @@ public class StudentAttendanceActivity extends AppCompatActivity {
             StudentAttendanceModelClass obj = new StudentAttendanceModelClass(
                     student.getUserId(), student.getUserName(), student.getUserEmail(),
                     student.getStudentDepartment(), student.getImageUrl(), uid, status);
-
-            reference.child(uid).setValue(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
+            String key = reference.push().getKey().toString();
+            reference.child(key).setValue(obj).addOnSuccessListener(new OnSuccessListener<Void>() {
                 @Override
                 public void onSuccess(Void unused) {
                     Toast.makeText(StudentAttendanceActivity.this, "Attendance Uploaded", Toast.LENGTH_SHORT).show();

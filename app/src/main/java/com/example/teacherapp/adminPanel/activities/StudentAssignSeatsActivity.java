@@ -76,7 +76,7 @@ public class StudentAssignSeatsActivity extends AppCompatActivity implements Ass
         refAssingroom = database.getReference("AssignedRooms").child(roomNum);
 
         DatabaseReference profileDetailsRef = reference.child("Profile Details");
-        if (counter<=30){
+        if (counter<=15){
         for (TeacherStudentListModelClass selected : receivedItems) {
 
                 String uid = selected.getUid();
@@ -103,7 +103,7 @@ public class StudentAssignSeatsActivity extends AppCompatActivity implements Ass
             }
 
         }else{
-            Toast.makeText(this, "Room is Full", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Room limit is just for 15 Person", Toast.LENGTH_SHORT).show();
         }
     }
 

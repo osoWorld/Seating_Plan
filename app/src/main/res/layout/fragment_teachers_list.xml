@@ -78,6 +78,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/poppins_thin"
                     android:text="Shahroz"
+                    android:id="@+id/teachernameID"
                     android:background="@drawable/edittext_background"
                     android:textAlignment="center"
                     android:textColor="@color/black"
@@ -118,6 +119,7 @@
                     android:layout_marginStart="18sp"
                     android:fontFamily="@font/poppins_thin"
                     android:text="32 C"
+                    android:id="@+id/roomID"
                     android:background="@drawable/edittext_background"
                     android:paddingTop="5dp"
                     android:paddingBottom="5dp"
@@ -158,6 +160,7 @@
                     android:layout_marginStart="18sp"
                     android:fontFamily="@font/poppins_thin"
                     android:text="K Block"
+                    android:id="@+id/blockID"
                     android:textAlignment="center"
                     android:textColor="@color/black"
                     android:textSize="24sp"
@@ -173,5 +176,13 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>
-
+    <ProgressBar
+        android:id="@+id/progressB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

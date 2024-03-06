@@ -77,8 +77,7 @@ public class UploadDateSheetActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference usersRef =
                 database.getReference("DutySheet")
-                        .child(department)
-                        .child(examType);
+                        ;
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("department", department);
