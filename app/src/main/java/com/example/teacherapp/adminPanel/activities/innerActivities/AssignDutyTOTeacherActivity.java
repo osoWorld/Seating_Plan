@@ -202,17 +202,20 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
 
                         for (ViewDutySheetModelClass data : datalist) {
                             String userID = data.getUserID();
-                            // Create an instance of AssignDutySheetModelClass
-                            DutyDetailsModeClass obj3 =new DutyDetailsModeClass(selectedTeacherUid,roomdata,userID);
-                            String key = assigndutyDetailstRef.getKey().toString();
-                            AssignDutySheetModelClass obj2 = new AssignDutySheetModelClass(userID, roomdata, selectedteacher,selectedTeacherUid);
-                            // Save the assignment to Firebase using the UID of the selected teacher
-                            assignmentRef.child(userID).setValue(obj2)
+                            String seatnumber = data.getSeatnumber();
+                            DutyDetailsModeClass obj3 = new DutyDetailsModeClass(selectedTeacherUid, roomdata, userID,seatnumber);
 
+                            // Generate a unique key for each assignment
+                            String key = assigndutyDetailstRef.push().getKey();
+
+                            AssignDutySheetModelClass obj2 = new AssignDutySheetModelClass(userID, roomdata, selectedteacher, selectedTeacherUid,seatnumber);
+
+                            assignmentRef.child(userID).setValue(obj2)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             if (task.isSuccessful()) {
+                                                // Use the unique key for each record in the details reference
                                                 assigndutyDetailstRef.child(selectedTeacherUid).child(key).setValue(obj3);
                                                 sendMessage();
                                                 Toast.makeText(AssignDutyTOTeacherActivity.this, "Duty assigned successfully", Toast.LENGTH_SHORT).show();
@@ -222,6 +225,7 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
                                         }
                                     });
                         }
+
                     }
                 } else {
                     Toast.makeText(AssignDutyTOTeacherActivity.this, "Teacher not found", Toast.LENGTH_SHORT).show();

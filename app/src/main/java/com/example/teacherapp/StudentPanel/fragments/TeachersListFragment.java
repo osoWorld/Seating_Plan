@@ -58,8 +58,7 @@ public class TeachersListFragment extends Fragment {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                       if (snapshot.exists()){
-                          for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                              AssignDutySheetModelClass model = snapshot1.getValue(AssignDutySheetModelClass.class);
+                              AssignDutySheetModelClass model = snapshot.getValue(AssignDutySheetModelClass.class);
                               String uid = model.getTeacherID();
                               String roomnumber= model.getUserRoom();
                               Log.d("userIds",uid);
@@ -89,7 +88,7 @@ public class TeachersListFragment extends Fragment {
                                           binding.progressB.setVisibility(View.GONE);
                                       }
                                   });
-                              }
+
 
                           }
                       }else{

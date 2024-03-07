@@ -1,15 +1,16 @@
 package com.example.teacherapp.modelClass;
 
 public class DutyDetailsModeClass {
-    String TeacherID,RoomData,StudentID;
+    String TeacherID,RoomData,StudentID,studentseatnumber;
 
     public DutyDetailsModeClass() {
     }
 
-    public DutyDetailsModeClass(String teacherID, String roomData, String studentID) {
+    public DutyDetailsModeClass(String teacherID, String roomData, String studentID, String studentseatnumber) {
         TeacherID = teacherID;
         RoomData = roomData;
         StudentID = studentID;
+        this.studentseatnumber = studentseatnumber;
     }
 
     public String getTeacherID() {

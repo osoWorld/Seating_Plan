@@ -1,13 +1,14 @@
 package com.example.teacherapp.modelClass;
 
 public class AssignDutySheetModelClass {
-    String StudentuserID,userRoom,Teachername,TeacherID;
+    String StudentuserID,userRoom,Teachername,TeacherID,studentseatnumber;
 
-    public AssignDutySheetModelClass(String studentuserID, String userRoom, String teachername, String teacherID) {
+    public AssignDutySheetModelClass(String studentuserID, String userRoom, String teachername, String teacherID, String studentseatnumber) {
         StudentuserID = studentuserID;
         this.userRoom = userRoom;
         Teachername = teachername;
         TeacherID = teacherID;
+        this.studentseatnumber = studentseatnumber;
     }
 
     public AssignDutySheetModelClass() {
