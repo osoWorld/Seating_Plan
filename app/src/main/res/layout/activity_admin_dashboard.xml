@@ -24,6 +24,7 @@
         android:id="@+id/adminDashboardRecView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        tools:listitem="@layout/admin_items_layout"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/textView17"
         app:layout_constraintStart_toStartOf="@+id/textView17"

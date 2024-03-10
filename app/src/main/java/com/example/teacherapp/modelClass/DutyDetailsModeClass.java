@@ -36,4 +36,12 @@ public class DutyDetailsModeClass {
     public void setStudentID(String studentID) {
         StudentID = studentID;
     }
+
+    public String getStudentseatnumber() {
+        return studentseatnumber;
+    }
+
+    public void setStudentseatnumber(String studentseatnumber) {
+        this.studentseatnumber = studentseatnumber;
+    }
 }

@@ -2,10 +2,13 @@ package com.example.teacherapp.adminPanel.activities.innerActivities;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.telephony.SmsManager;
 import android.util.Log;
@@ -44,6 +47,8 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
     private DatabaseReference reference;
     ArrayAdapter<String> teacheradapter;
     String roomdata,selectedteacher;
+    final int SEND_SMS_REQUEST_CODE=1;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,7 +80,19 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
                 AssignDutyToTeacher();
             }
         });
+        // permission for send sms
+        if(Checkpermission(android.Manifest.permission.SEND_SMS)){
+            Toast.makeText(this, "Permission is granted", Toast.LENGTH_SHORT).show();
+        }else {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{android.Manifest.permission.SEND_SMS},SEND_SMS_REQUEST_CODE);
+        }
 
+    }
+
+    public boolean Checkpermission(String permissions){
+        int check= ContextCompat.checkSelfPermission(this,permissions);
+        return (check== PackageManager.PERMISSION_GRANTED);
     }
 
     private void getRoomData(String roonnum) {
@@ -203,6 +220,7 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
                         for (ViewDutySheetModelClass data : datalist) {
                             String userID = data.getUserID();
                             String seatnumber = data.getSeatnumber();
+                            Log.d("seatnumber",seatnumber);
                             DutyDetailsModeClass obj3 = new DutyDetailsModeClass(selectedTeacherUid, roomdata, userID,seatnumber);
 
                             // Generate a unique key for each assignment
@@ -217,7 +235,7 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
                                             if (task.isSuccessful()) {
                                                 // Use the unique key for each record in the details reference
                                                 assigndutyDetailstRef.child(selectedTeacherUid).child(key).setValue(obj3);
-                                                sendMessage();
+//                                                sendMessage();
                                                 Toast.makeText(AssignDutyTOTeacherActivity.this, "Duty assigned successfully", Toast.LENGTH_SHORT).show();
                                             } else {
                                                 Toast.makeText(AssignDutyTOTeacherActivity.this, "Failed to assign duty: " + task.getException(), Toast.LENGTH_SHORT).show();
@@ -240,9 +258,11 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
     }
     private void sendMessage(){
         try {
-            SmsManager smsManager = SmsManager.getDefault();
-            smsManager.sendTextMessage("03117914669", null, "Duty Sheet is Ready", null, null);
-            Toast.makeText(getApplicationContext(), "SMS sent.", Toast.LENGTH_SHORT).show();
+            if (Checkpermission(android.Manifest.permission.SEND_SMS)){
+                SmsManager smsManager=SmsManager.getDefault();
+                smsManager.sendTextMessage("",null,"",null,null);
+                Toast.makeText(this, "Message Sent Sucessfully", Toast.LENGTH_SHORT).show();
+            }
         } catch (Exception e) {
             Toast.makeText(getApplicationContext(), "SMS failed to send.", Toast.LENGTH_SHORT).show();
             e.printStackTrace();

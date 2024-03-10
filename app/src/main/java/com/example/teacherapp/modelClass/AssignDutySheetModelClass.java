@@ -45,4 +45,20 @@ public class AssignDutySheetModelClass {
     public void setTeacherID(String teacherID) {
         TeacherID = teacherID;
     }
+
+    public String getStudentuserID() {
+        return StudentuserID;
+    }
+
+    public void setStudentuserID(String studentuserID) {
+        StudentuserID = studentuserID;
+    }
+
+    public String getStudentseatnumber() {
+        return studentseatnumber;
+    }
+
+    public void setStudentseatnumber(String studentseatnumber) {
+        this.studentseatnumber = studentseatnumber;
+    }
 }

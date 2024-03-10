@@ -72,66 +72,82 @@ public class StudentAttendanceActivity extends AppCompatActivity {
             }
         });
         //current login Id
-        auth = FirebaseAuth.getInstance();
-        if (user!=null){
-            String currentloginID = user.getUid().toString();
-            reference = FirebaseDatabase.getInstance().getReference(
-                    "TeacherAssignDuty").child("Details");
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        FirebaseUser user = auth.getCurrentUser();
 
-            reference.child(currentloginID).addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                    list.clear();
-                    for (DataSnapshot snapshot1 : snapshot.getChildren()) {
-                        DutyDetailsModeClass model = snapshot1.getValue(DutyDetailsModeClass.class);
-                        String userID  = model.getStudentID();
-                        roomData = model.getRoomData();
+        if (user != null) {
+            String userId = user.getUid();
+            getData(userId);
+            Toast.makeText(getApplicationContext(), ""+userId, Toast.LENGTH_SHORT).show();
 
-                        if (userID != null) {
-                            DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details");
-                            ref.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
-                                @Override
-                                public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                    if (snapshot.exists()){
-                                        StudentAttendanceModelClass obj = snapshot.getValue(StudentAttendanceModelClass.class);
-                                        Log.d("userIds",obj.getUserName());
-                                        list.add(obj);
-                                        binding.progressB.setVisibility(View.GONE);
+            // Now you have the current user's ID (userId)
+        } else {
+            Log.d("idnull", "null");
 
-                                        adapter.notifyDataSetChanged();
-                                    }
-                                }
-
-                                @Override
-                                public void onCancelled(@NonNull DatabaseError error) {
-                                    Toast.makeText(getApplicationContext(), "FT"+error.getMessage(), Toast.LENGTH_SHORT).show();
-                                    binding.progressB.setVisibility(View.GONE);
-                                }
-                            });
-
-                            binding.progressB.setVisibility(View.GONE);
-
-                        }
-
-                    }
-
-                    adapter.notifyDataSetChanged();
-                }
-
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
-
-                }
-            });
-
-
-            binding.studentAttendanceSheetRecyclerView.setAdapter(adapter);
-            binding.studentAttendanceSheetRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+            // User is not logged in
         }
 
 
     }
+    private void getData(String uid){
+
+        reference = FirebaseDatabase.getInstance().getReference(
+                "TeacherAssignDuty").child("Details");
+
+        reference.child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                list.clear();
+                for (DataSnapshot snapshot1 : snapshot.getChildren()) {
+                    DutyDetailsModeClass model = snapshot1.getValue(DutyDetailsModeClass.class);
+                    String userID  = model.getStudentID();
+                    roomData = model.getRoomData();
+
+                    if (userID != null) {
+                        DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details");
+                        ref.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                if (snapshot.exists()){
+                                    StudentAttendanceModelClass obj = snapshot.getValue(StudentAttendanceModelClass.class);
+                                    Log.d("userIds",obj.getUserName());
+                                    list.add(obj);
+                                    binding.progressB.setVisibility(View.GONE);
+
+                                    adapter.notifyDataSetChanged();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+                                Toast.makeText(getApplicationContext(), "FT"+error.getMessage(), Toast.LENGTH_SHORT).show();
+                                binding.progressB.setVisibility(View.GONE);
+                            }
+                        });
+
+                        binding.progressB.setVisibility(View.GONE);
+
+                    }
+
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+        binding.studentAttendanceSheetRecyclerView.setAdapter(adapter);
+        binding.studentAttendanceSheetRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    }
+
+
+
 
     private void uploadAttendance() {
 

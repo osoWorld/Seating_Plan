@@ -37,7 +37,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="seat number"
+                        android:text="rollnum"
                         android:gravity="center"
                         android:padding="16dp"
                         android:textColor="@color/white"
@@ -64,7 +64,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="seat number"
+                        android:text="Student"
                         android:gravity="center"
                         android:padding="16dp"
                         android:textColor="@color/white"
@@ -91,7 +91,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="seat number"
+                        android:text="Department"
                         android:gravity="center"
                         android:padding="16dp"
                         android:textColor="@color/white"
