@@ -1,6 +1,7 @@
 package com.example.teacherapp.teacherPanel.classes.adapterClasses;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +11,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.teacherapp.R;
+import com.example.teacherapp.adminPanel.classes.modelClasses.TeacherStudentListModelClass;
 import com.example.teacherapp.teacherPanel.classes.modelClasses.StudentAttendanceModelClass;
 
 import java.util.ArrayList;
@@ -22,6 +25,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 
 public class StudentAttendanceAdapter extends RecyclerView.Adapter<StudentAttendanceAdapter.StudentAttendanceViewHolder> {
     private ArrayList<StudentAttendanceModelClass> mList;
+    ArrayList<StudentAttendanceModelClass> selectedlist = new ArrayList<>();
+
     private Context context;
 
 
@@ -51,33 +56,36 @@ public class StudentAttendanceAdapter extends RecyclerView.Adapter<StudentAttend
         holder.studentSeatNumber.setText(data.getStudentDepartment());
 
 //        data.setStudentAttendanceStatus("Absent");
+        holder.cardView.setCardBackgroundColor(selectedlist.contains(data) ? Color.CYAN : Color.WHITE);
 
-        holder.attendanceCheck.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
-                if(holder.attendanceCheck.isChecked()) {
-                    holder.attendanceCheck.setChecked(true);
-                    data.setStudentAttendanceStatus("Present");
-                    mList.add(data);
-                    Toast.makeText(context, ""+data.getUserName()+" Present", Toast.LENGTH_SHORT).show();
-                }else {
-//                    data.setStudentAttendanceStatus("Absent");
-                    holder.attendanceCheck.setChecked(false);
-//                    mList.add(data);
-                }
-            }
-        });
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+           @Override
+           public void onClick(View v) {
+               if (selectedlist.contains(data)) {
+                   selectedlist.remove(data);
+                   holder.cardView.setCardBackgroundColor(Color.WHITE);
+
+               } else {
+                   selectedlist.add(data);
+                   holder.cardView.setCardBackgroundColor(Color.CYAN);
+               }
+           }
+       });
+
     }
 
     @Override
     public int getItemCount() {
         return mList.size();
     }
+    public ArrayList<StudentAttendanceModelClass> getSelected(){
+        return selectedlist;
+    }
 
     class StudentAttendanceViewHolder extends RecyclerView.ViewHolder {
         CircleImageView studentImage;
         TextView studentName, studentRollNumber, studentSeatNumber;
-        CheckBox attendanceCheck;
+        CardView  cardView;
 
         public StudentAttendanceViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -86,7 +94,7 @@ public class StudentAttendanceAdapter extends RecyclerView.Adapter<StudentAttend
             studentName = itemView.findViewById(R.id.studentAttendanceName);
             studentRollNumber = itemView.findViewById(R.id.studentAttendanceRollNo);
             studentSeatNumber = itemView.findViewById(R.id.studentAttendanceSeatNo);
-            attendanceCheck = itemView.findViewById(R.id.studentsAttendanceCheckBox);
+            cardView = itemView.findViewById(R.id.cardviewatterndanceId);
 
         }
     }
