@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.teacherapp.R;
@@ -18,10 +19,13 @@ import java.util.ArrayList;
 public class StudentDetailCheckAdapter extends RecyclerView.Adapter<StudentDetailCheckAdapter.StudentDetailCheckViewHolder>{
     ArrayList<StudentDetailCheckModelClass> seatList;
     Context context;
+    String Snumber;
 
-    public StudentDetailCheckAdapter(ArrayList<StudentDetailCheckModelClass> seatList, Context context) {
+    public StudentDetailCheckAdapter(ArrayList<StudentDetailCheckModelClass> seatList, Context context, String snumber) {
         this.seatList = seatList;
         this.context = context;
+        Snumber = snumber;
+        System.out.println("Dynamic Room Number:" + Snumber);
     }
 
     @NonNull
@@ -39,6 +43,14 @@ public class StudentDetailCheckAdapter extends RecyclerView.Adapter<StudentDetai
         holder.rollNumText.setText(sList.getRollNum());
         holder.seatNum.setText(sList.getSeatNumber());
         holder.seatImg.setImageResource(sList.getSeatImg());
+        // Check if the current room number matches the dynamic room number
+        if (sList.getSeatNumber().equals(Snumber.trim())) {
+            // Change background color if the room number matches the dynamic room number
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), R.color.fav_blue));
+        } else {
+            // Set default background color
+            holder.itemView.setBackgroundColor(ContextCompat.getColor(holder.itemView.getContext(), android.R.color.white));
+        }
     }
 
     @Override

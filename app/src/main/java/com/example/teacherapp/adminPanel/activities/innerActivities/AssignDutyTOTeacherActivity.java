@@ -46,7 +46,8 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
     private ArrayList<String> teacherlist;
     private DatabaseReference reference;
     ArrayAdapter<String> teacheradapter;
-    String roomdata,selectedteacher;
+    ArrayAdapter<String> subadapter;
+    String roomdata,selectedteacher,subselected;
     final int SEND_SMS_REQUEST_CODE=1;
 
 
@@ -55,7 +56,7 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         binding = ActivityAssignDutyToteacherBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
+        GetTeacherlist();
         roomdata = getIntent().getStringExtra("roomkey");
         if (roomdata != null) {
             getRoomData(roomdata);
@@ -69,10 +70,23 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 selectedteacher = parent.getItemAtPosition(position).toString();
-                Toast.makeText(AssignDutyTOTeacherActivity.this, "Selected"+selectedteacher, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AssignDutyTOTeacherActivity.this, " Selected "+selectedteacher, Toast.LENGTH_SHORT).show();
             }
         });
-        GetTeacherlist();
+        // for subject
+        String sublist[]= {"Computer","English"};
+        subadapter=new ArrayAdapter<>(this, android.R.layout.simple_dropdown_item_1line, sublist);
+        binding.subjectautoCompleteTextView.setAdapter(subadapter);
+        binding.subjectautoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                subselected = parent.getItemAtPosition(position).toString();
+                Toast.makeText(AssignDutyTOTeacherActivity.this, " Selected "+subselected, Toast.LENGTH_SHORT).show();
+
+
+            }
+        });
+
         // assigndutybtn
         binding.assignDutyID.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -221,12 +235,12 @@ public class AssignDutyTOTeacherActivity extends AppCompatActivity {
                             String userID = data.getUserID();
                             String seatnumber = data.getSeatnumber();
                             Log.d("seatnumber",seatnumber);
-                            DutyDetailsModeClass obj3 = new DutyDetailsModeClass(selectedTeacherUid, roomdata, userID,seatnumber);
+                            DutyDetailsModeClass obj3 = new DutyDetailsModeClass(selectedTeacherUid, roomdata, userID,seatnumber,subselected);
 
                             // Generate a unique key for each assignment
                             String key = assigndutyDetailstRef.push().getKey();
 
-                            AssignDutySheetModelClass obj2 = new AssignDutySheetModelClass(userID, roomdata, selectedteacher, selectedTeacherUid,seatnumber);
+                            AssignDutySheetModelClass obj2 = new AssignDutySheetModelClass(userID, roomdata, selectedteacher, selectedTeacherUid,seatnumber,subselected);
 
                             assignmentRef.child(userID).setValue(obj2)
                                     .addOnCompleteListener(new OnCompleteListener<Void>() {

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 
 import com.example.teacherapp.R;
 import com.example.teacherapp.adminPanel.activities.RoomOfStudentAttendanceActivity;
+import com.example.teacherapp.adminPanel.adminFragment.ViewRoomDutyAttendanceAdminActivity;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AssignRoomDutySheetAdapter;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.ViewAttendanceAdapter;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.ViewPagerAdapter;
@@ -59,6 +60,6 @@ public class ViewAttendanceActivity extends AppCompatActivity implements AssignR
 
     @Override
     public void onItemClick(AssignRoomModelClass roomData) {
-        startActivity(new Intent(this, RoomOfStudentAttendanceActivity.class).putExtra("RoomKey",roomData.getRoomName()));
+        startActivity(new Intent(this, ViewRoomDutyAttendanceAdminActivity.class).putExtra("RoomKey",roomData.getRoomName()));
     }
 }

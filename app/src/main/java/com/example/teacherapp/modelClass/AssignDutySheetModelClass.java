@@ -1,14 +1,15 @@
 package com.example.teacherapp.modelClass;
 
 public class AssignDutySheetModelClass {
-    String StudentuserID,userRoom,Teachername,TeacherID,studentseatnumber;
+    String StudentuserID,userRoom,Teachername,TeacherID,studentseatnumber,papername;
 
-    public AssignDutySheetModelClass(String studentuserID, String userRoom, String teachername, String teacherID, String studentseatnumber) {
+    public AssignDutySheetModelClass(String studentuserID, String userRoom, String teachername, String teacherID, String studentseatnumber, String papername) {
         StudentuserID = studentuserID;
         this.userRoom = userRoom;
         Teachername = teachername;
         TeacherID = teacherID;
         this.studentseatnumber = studentseatnumber;
+        this.papername = papername;
     }
 
     public AssignDutySheetModelClass() {
@@ -60,5 +61,13 @@ public class AssignDutySheetModelClass {
 
     public void setStudentseatnumber(String studentseatnumber) {
         this.studentseatnumber = studentseatnumber;
+    }
+
+    public String getPapername() {
+        return papername;
+    }
+
+    public void setPapername(String papername) {
+        this.papername = papername;
     }
 }

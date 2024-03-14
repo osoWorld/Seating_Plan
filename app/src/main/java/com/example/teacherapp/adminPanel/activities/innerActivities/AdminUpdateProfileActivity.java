@@ -86,7 +86,7 @@ public class AdminUpdateProfileActivity extends AppCompatActivity {
 
     private void getUserData() {
         if (uid != null) {
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Seating Plan").child("Profile Details").child("Admin").child(uid);
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Seating Plan").child(" Profile Details").child(uid);
             userRef.addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -127,7 +127,7 @@ public class AdminUpdateProfileActivity extends AppCompatActivity {
 
     private void updateProfile(String name, String email, String password, String imageUri){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference usersRef = database.getReference("Seating Plan").child("Profile Details").child("Admin").child(uid);
+        DatabaseReference usersRef = database.getReference("Seating Plan").child("Profile Details").child(uid);
 
         Map<String, Object> updates = new HashMap<>();
         updates.put("userName",name);

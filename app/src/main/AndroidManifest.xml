@@ -3,13 +3,13 @@
     xmlns:dist="http://schemas.android.com/apk/distribution"
     xmlns:tools="http://schemas.android.com/tools">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
 
     <uses-feature
         android:name="android.hardware.telephony"
         android:required="false" />
-    <uses-permission android:name="android.permission.SEND_SMS"></uses-permission>
+
+    <uses-permission android:name="android.permission.SEND_SMS" />
 
     <application
         android:allowBackup="true"
@@ -21,6 +21,18 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TeacherApp"
         tools:targetApi="31">
+        <activity
+            android:name=".adminPanel.activities.innerActivities.View124AttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminPanel.activities.innerActivities.View123AttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminPanel.activities.innerActivities.View122AttendanceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminPanel.adminFragment.ViewRoomDutyAttendanceAdminActivity"
+            android:exported="false" />
         <activity
             android:name=".adminPanel.activities.RoomOfStudentAttendanceActivity"
             android:exported="false" />
@@ -68,8 +80,7 @@
             android:exported="false" />
         <activity
             android:name=".adminPanel.activities.AdminDashboardActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".teacherPanel.activities.StudentAttendanceActivity"
             android:exported="true" />
@@ -78,9 +89,7 @@
             android:exported="true" />
         <activity
             android:name=".StudentPanel.activities.StudentsDashboardActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".teacherPanel.activities.TeacherDetailCheckActivity"
             android:exported="false" />
@@ -92,9 +101,7 @@
             android:exported="false" />
         <activity
             android:name=".StudentPanel.activities.StudentDashboardActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".StudentPanel.activities.ForgetPasswordActivity"
             android:exported="false" />
@@ -106,7 +113,7 @@
             android:exported="false" />
         <activity
             android:name=".splashScreen.MySplashScreenActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
