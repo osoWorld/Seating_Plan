@@ -75,30 +75,10 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
                     context.startActivity(new Intent(context, AdminUpdateProfileActivity.class));
                 } else if (id == 8) {
 
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setMessage("Do you sure want to logout ?");
-                    builder.setTitle("Logout !");
-                    builder.setCancelable(false);
 
-                    builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-                        PrefManager prefManager = new PrefManager(context);
-                        prefManager.setCurrentstatus("");
-                        FirebaseAuth auth = FirebaseAuth.getInstance();
-                        auth.signOut();
-                        context.startActivity(new Intent(context, LoginActivity.class));
-                    });
-
-                    builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
-
-                        dialog.cancel();
-                    });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
 
                 } else if (id == 9) {
                     context.startActivity(new Intent(context, ViewAttendanceActivity.class));
-                } else if (id == 10) {
-                    context.startActivity(new Intent(context, TeachersDetaislActivity.class));
                 } else {
 
                 }

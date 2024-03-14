@@ -5,15 +5,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.example.teacherapp.R;
+import com.example.teacherapp.StudentPanel.activities.LoginActivity;
 import com.example.teacherapp.StudentPanel.activities.SignupActivity;
 import com.example.teacherapp.adminPanel.classes.adapterClasses.AdminDashboardAdapter;
 import com.example.teacherapp.adminPanel.classes.modelClasses.AdminDashboardItemsModelClass;
 import com.example.teacherapp.databinding.ActivityAdminDashboardBinding;
+import com.example.teacherapp.sharedPrefrences.PrefManager;
+import com.google.firebase.auth.FirebaseAuth;
 
 import java.util.ArrayList;
 
@@ -38,16 +43,39 @@ public class AdminDashboardActivity extends AppCompatActivity {
         list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_file_upload_24, "Upload Date Sheet", 3));
         list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_file_upload_24, "Upload Duty Sheet", 4));
         list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_chair_alt_24,"Assign Seats",5));
-        list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_home_filled_24,"Assign Rooms",6));
+        list.add(new AdminDashboardItemsModelClass(R.drawable.baseline_home_filled_24,"View Rooms",6));
         list.add(new AdminDashboardItemsModelClass(R.drawable.attendance_admin,"Attendance",9));
-        list.add(new AdminDashboardItemsModelClass(R.drawable.teacher,"Teachers Details",10));
         list.add(new AdminDashboardItemsModelClass(R.drawable.user_my,"Update Profile",7));
-        list.add(new AdminDashboardItemsModelClass(R.drawable.log_out,"Log out",8));
 
         AdminDashboardAdapter adapter = new AdminDashboardAdapter(list,this);
 
         binding.adminDashboardRecView.setAdapter(adapter);
         binding.adminDashboardRecView.setLayoutManager(new GridLayoutManager(this,2));
+
+        binding.logoutAdminButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                builder.setMessage("Do you sure want to logout ?");
+                builder.setTitle("Logout !");
+                builder.setCancelable(false);
+
+                builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
+                    PrefManager prefManager = new PrefManager(getApplicationContext());
+                    prefManager.setCurrentstatus("");
+                    FirebaseAuth auth = FirebaseAuth.getInstance();
+                    auth.signOut();
+                    startActivity(new Intent(AdminDashboardActivity.this, LoginActivity.class));
+                });
+
+                builder.setNegativeButton("No", (DialogInterface.OnClickListener) (dialog, which) -> {
+
+                    dialog.cancel();
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
     }
 
     @Override
