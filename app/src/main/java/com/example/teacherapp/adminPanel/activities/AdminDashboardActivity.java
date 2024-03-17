@@ -55,13 +55,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
         binding.logoutAdminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdminDashboardActivity.this);
                 builder.setMessage("Do you sure want to logout ?");
                 builder.setTitle("Logout !");
                 builder.setCancelable(false);
 
                 builder.setPositiveButton("Yes", (DialogInterface.OnClickListener) (dialog, which) -> {
-                    PrefManager prefManager = new PrefManager(getApplicationContext());
+                    PrefManager prefManager = new PrefManager(AdminDashboardActivity.this);
                     prefManager.setCurrentstatus("");
                     FirebaseAuth auth = FirebaseAuth.getInstance();
                     auth.signOut();

@@ -22,6 +22,12 @@
         android:theme="@style/Theme.TeacherApp"
         tools:targetApi="31">
         <activity
+            android:name=".adminPanel.activities.innerActivities.TablayoutwithTeacherlistActivity"
+            android:exported="false" />
+        <activity
+            android:name=".adminPanel.activities.innerActivities.TablayoutWithStudentlistActivity"
+            android:exported="false" />
+        <activity
             android:name=".adminPanel.activities.innerActivities.View124AttendanceActivity"
             android:exported="false" />
         <activity
@@ -80,11 +86,7 @@
             android:exported="false" />
         <activity
             android:name=".adminPanel.activities.AdminDashboardActivity"
-            android:exported="true" >
-
-
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".teacherPanel.activities.StudentAttendanceActivity"
             android:exported="true" />
@@ -93,15 +95,7 @@
             android:exported="true" />
         <activity
             android:name=".StudentPanel.activities.StudentsDashboardActivity"
-            android:exported="true">
-
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".teacherPanel.activities.TeacherDetailCheckActivity"
             android:exported="false" />
@@ -126,7 +120,11 @@
         <activity
             android:name=".splashScreen.MySplashScreenActivity"
             android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name=".MainActivity"

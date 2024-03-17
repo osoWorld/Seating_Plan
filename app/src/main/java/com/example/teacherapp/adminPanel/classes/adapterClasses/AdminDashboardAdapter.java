@@ -21,6 +21,8 @@ import com.example.teacherapp.adminPanel.activities.innerActivities.AdminUpdateP
 import com.example.teacherapp.adminPanel.activities.innerActivities.AssignRoomsActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.AssignSeatsActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.StudentListActivity;
+import com.example.teacherapp.adminPanel.activities.innerActivities.TablayoutWithStudentlistActivity;
+import com.example.teacherapp.adminPanel.activities.innerActivities.TablayoutwithTeacherlistActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.TeacherListActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.TeachersDetaislActivity;
 import com.example.teacherapp.adminPanel.activities.innerActivities.UploadDateSheetActivity;
@@ -60,9 +62,9 @@ public class AdminDashboardAdapter extends RecyclerView.Adapter<AdminDashboardAd
                 int id = data.getItemPosition();
 
                 if (id == 1) {
-                    context.startActivity(new Intent(context, StudentListActivity.class));
+                    context.startActivity(new Intent(context, TablayoutWithStudentlistActivity.class));
                 } else if (id == 2) {
-                    context.startActivity(new Intent(context, TeacherListActivity.class));
+                    context.startActivity(new Intent(context, TablayoutwithTeacherlistActivity.class));
                 } else if (id == 3) {
                     context.startActivity(new Intent(context, UploadDateSheetActivity.class));
                 } else if (id == 4) {
